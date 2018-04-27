@@ -20,11 +20,11 @@
 package com.codename1.uikit.pheonixui;
 
 import GUI.AccueilForm;
-import GUI.ArticleForm;
-import GUI.EventForm;
-import GUI.HebergementForm;
+import GUI.Article.ArticleForm;
+import GUI.Event.EventForm;
+import GUI.Hebergement.HebergementForm;
 import GUI.MonprofilForm;
-import GUI.PlanForm;
+import GUI.Plan.PlanForm;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
