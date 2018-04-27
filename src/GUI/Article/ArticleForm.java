@@ -16,7 +16,7 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-package GUI;
+package GUI.Article;
 
 import com.codename1.uikit.pheonixui.*;
 import com.codename1.components.ScaleImageLabel;
@@ -29,13 +29,13 @@ import com.codename1.ui.plaf.Style;
  *
  * @author shai
  */
-public class PlanForm extends BaseForm {
+public class ArticleForm extends BaseForm {
 
-    public PlanForm() {
+    public ArticleForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
     
-    public PlanForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+    public ArticleForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
         gui_separator1.setShowEvenIfBlank(true);
         gui_Label_1_1_1.setShowEvenIfBlank(true);
