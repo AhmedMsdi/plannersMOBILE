@@ -16,7 +16,6 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-
 package com.codename1.uikit.pheonixui;
 
 import GUI.AccueilForm;
@@ -25,6 +24,8 @@ import GUI.Event.EventForm;
 import GUI.Hebergement.HebergementForm;
 import GUI.MonprofilForm;
 import GUI.Plan.PlanForm;
+import GUI.Plan.PlanFormBienEtre;
+import GUI.Plan.PlanFormGastronomie;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
@@ -40,37 +41,49 @@ import com.codename1.ui.util.Resources;
  * @author Shai Almog
  */
 public class BaseForm extends Form {
+
     public void installSidemenu(Resources res) {
         Image selection = res.getImage("selection-in-sidemenu.png");
-        
+
         Image inboxImage = null;
-        if(isCurrentInbox()) inboxImage = selection;
+        if (isCurrentInbox()) {
+            inboxImage = selection;
+        }
 
         Image trendingImage = null;
-        if(isCurrentTrending()) trendingImage = selection;
-        
+        if (isCurrentTrending()) {
+            trendingImage = selection;
+        }
+
         Image calendarImage = null;
-        if(isCurrentCalendar()) calendarImage = selection;
-        
+        if (isCurrentCalendar()) {
+            calendarImage = selection;
+        }
+
         Image statsImage = null;
-        if(isCurrentStats()) statsImage = selection;
-        
+        if (isCurrentStats()) {
+            statsImage = selection;
+        }
+
         Button inboxButton = new Button("Accueil", inboxImage);
         inboxButton.setUIID("SideCommand");
         inboxButton.getAllStyles().setPaddingBottom(0);
-        Container inbox = FlowLayout.encloseMiddle(inboxButton, 
+        Container inbox = FlowLayout.encloseMiddle(inboxButton,
                 new Label("18", "SideCommandNumber"));
         inbox.setLeadComponent(inboxButton);
         inbox.setUIID("SideCommand");
         inboxButton.addActionListener(e -> new AccueilForm().show());
         getToolbar().addComponentToSideMenu(inbox);
-        
-        getToolbar().addCommandToSideMenu("Plans", statsImage, e -> new PlanForm(res).show());
+
+        // getToolbar().addCommandToSideMenu("Plans", statsImage, e -> new PlanForm(res).show());
+        getToolbar().addCommandToSideMenu("Divertissement", statsImage, e -> new PlanForm(res).show());
+        getToolbar().addCommandToSideMenu("Gastronomie", statsImage, e -> new PlanFormGastronomie(res).show());
+        getToolbar().addCommandToSideMenu("Bien Etre", statsImage, e -> new PlanFormBienEtre(res).show());
         getToolbar().addCommandToSideMenu("Evenements", calendarImage, e -> new EventForm(res).show());
         getToolbar().addCommandToSideMenu("Hebergements", null, e -> new HebergementForm(res).show());
         getToolbar().addCommandToSideMenu("Articles", trendingImage, e -> new ArticleForm(res).show());
         getToolbar().addCommandToSideMenu("Mon Profil", null, e -> new MonprofilForm(res).show());
-        
+
         // spacer
         getToolbar().addComponentToSideMenu(new Label(" ", "SideCommand"));
         getToolbar().addComponentToSideMenu(new Label(res.getImage("profile_image.png"), "Container"));
@@ -78,11 +91,10 @@ public class BaseForm extends Form {
         getToolbar().addComponentToSideMenu(new Label("Long Beach, CA", "SideCommandSmall"));
     }
 
-        
     protected boolean isCurrentInbox() {
         return false;
     }
-    
+
     protected boolean isCurrentTrending() {
         return false;
     }
