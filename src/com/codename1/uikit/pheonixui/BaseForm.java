@@ -20,7 +20,7 @@
 package com.codename1.uikit.pheonixui;
 
 import GUI.AccueilForm;
-import GUI.Article.ArticleForm;
+import GUI.Article.PubliciteForm;
 import GUI.Event.EventForm;
 import GUI.Hebergement.HebergementForm;
 import GUI.MonprofilForm;
@@ -68,7 +68,7 @@ public class BaseForm extends Form {
         getToolbar().addCommandToSideMenu("Plans", statsImage, e -> new PlanForm(res).show());
         getToolbar().addCommandToSideMenu("Evenements", calendarImage, e -> new EventForm(res).show());
         getToolbar().addCommandToSideMenu("Hebergements", null, e -> new HebergementForm(res).show());
-        getToolbar().addCommandToSideMenu("Articles", trendingImage, e -> new ArticleForm(res).show());
+        getToolbar().addCommandToSideMenu("Articles", trendingImage, e -> new PubliciteForm(res).show());
         getToolbar().addCommandToSideMenu("Mon Profil", null, e -> new MonprofilForm(res).show());
         
         // spacer

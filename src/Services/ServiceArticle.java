@@ -20,8 +20,6 @@ import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import Entity.publicite;
-import GUI.Article.PubliciteForm;
-import com.codename1.ui.FontImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +29,10 @@ import java.util.Map;
  *
  * @author sana
  */
-public class ServicePublicite {
+public class ServiceArticle {
 
         
-    public static String serverAhmed ="192.168.1.9";
+    
     public static double[] values1 = new double[2];
     public static String[] values2 = new String[2];
    public static ArrayList<String> titres=new ArrayList<String>();  
@@ -42,7 +40,7 @@ public class ServicePublicite {
 
     public void ajoutTask(publicite ta) {
         ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://"+serverAhmed+"/planners/web/app_dev.php/pubjsonnew?text=" + ta.getTitre_pub()
+        String Url = "http://192.168.1.4/planners/web/app_dev.php/pubjsonnew?text=" + ta.getTitre_pub()
                 + "&description=" + ta.getDesc_pub() +"&siteweb="+ta.getSite_pub()+"&tags="+ta.getTags()+"&image="+ta.getImg_pub();
         con.setUrl(Url);
 
@@ -75,8 +73,6 @@ public class ServicePublicite {
            
             List<Map<String, Object>> list = (List<Map<String, Object>>) etudiants.get("root");
                 int i=0;
-                titres.clear();
-                clicks.clear();
             for (Map<String, Object> obj : list) {
                 
                 publicite e = new publicite();
@@ -84,18 +80,19 @@ public class ServicePublicite {
                 // System.out.println(obj.get("id"));
                // float id = Float.parseFloat(obj.get("idPub").toString());
                // System.out.println(id);
-                e.setId_pub(obj.get("idPub").toString());
+              //  e.setId_pub(obj.get("idPub").toString());
                 //e.setId(Integer.parseInt(obj.get("id").toString().trim()));
-                e.setImg_pub(obj.get("image").toString());
-                e.setTitre_pub(obj.get("text").toString());
-                e.setSite_pub(obj.get("siteWeb").toString());
-                e.setDesc_pub(obj.get("description").toString());
+                
+                e.setImg_pub(obj.get("contenu").toString());
+                System.out.println(obj.get("contenu").toString());
+              //  e.setTitre_pub(obj.get("text").toString());
+              //  e.setSite_pub(obj.get("siteWeb").toString());
+               // e.setDesc_pub(obj.get("description").toString());
                 //e.setNb_click();
                 
-                clicks.add(Double.parseDouble(obj.get("nbClick").toString()));
+               // clicks.add(Double.parseDouble(obj.get("nbClick").toString()));
              //  values1[i]=Double.parseDouble(obj.get("nbClick").toString());
               //  values2[i]=e.getTitre_pub();
-              
                 titres.add(e.getTitre_pub());
               
                i++;
@@ -114,13 +111,13 @@ public class ServicePublicite {
     
     public ArrayList<publicite> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://"+serverAhmed+"/planners/web/app_dev.php/pubjson");  
+        con.setUrl("http://192.168.1.4/planners/web/app_dev.php/articlejson");  
         
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                   listTasks.clear();
-                ServicePublicite ser = new ServicePublicite();
+                ServiceArticle ser = new ServiceArticle();
                 listTasks = ser.getListTask(new String(con.getResponseData()));
             }
         });
@@ -197,12 +194,8 @@ public Form createPieChartForm() {
     ChartComponent c = new ChartComponent(chart);
 
     // Create a form and show it.
-    Form f = new Form("Nombre de clicks", new BorderLayout());
+    Form f = new Form("Budget", new BorderLayout());
     f.add(BorderLayout.CENTER, c);
-     f.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_KEYBOARD_BACKSPACE, e -> {
-             PubliciteForm h=new PubliciteForm();
-                                h.show();
-        });
     return f;
 
 }

@@ -19,6 +19,7 @@
 
 package com.codename1.uikit.pheonixui;
 
+import GUI.Article.WalkthruPubForm;
 import com.codename1.components.InfiniteProgress;
 import com.codename1.ui.Display;
 import com.codename1.ui.Image;
@@ -49,7 +50,7 @@ public class SplashForm extends com.codename1.ui.Form {
         gui_Infinite_Progress_1.setAngleIncrease(1);
         Image logoImage = Effects.dropshadow(resourceObjectInstance.getImage("logo.png"), 10, 70, size, size);
         gui_Label_1.setIcon(logoImage);
-        UITimer.timer(3000, false, this, () -> new WalkthruForm(resourceObjectInstance).show());
+        UITimer.timer(3000, false, this, () -> new WalkthruPubForm(resourceObjectInstance).show());
     }
 
 //-- DON'T EDIT BELOW THIS LINE!!!
