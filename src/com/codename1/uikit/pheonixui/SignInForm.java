@@ -18,7 +18,21 @@
  */
 package com.codename1.uikit.pheonixui;
 
+import Entity.Plan;
+import Entity.User;
+import GUI.AccueilForm;
+import Services.ServicePlans;
+import com.codename1.io.CharArrayReader;
+import com.codename1.io.ConnectionRequest;
+import com.codename1.io.JSONParser;
+import com.codename1.io.NetworkEvent;
+import com.codename1.io.NetworkManager;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.events.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * GUI builder created Form
@@ -30,7 +44,8 @@ public class SignInForm extends com.codename1.ui.Form {
     public SignInForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
-    
+    public static int id;
+
     public SignInForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
@@ -51,7 +66,6 @@ public class SignInForm extends com.codename1.ui.Form {
     private com.codename1.ui.Button gui_Button_3 = new com.codename1.ui.Button();
     private com.codename1.ui.Button gui_Button_1 = new com.codename1.ui.Button();
 
-
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void guiBuilderBindComponentListeners() {
         EventCallbackClass callback = new EventCallbackClass();
@@ -59,7 +73,9 @@ public class SignInForm extends com.codename1.ui.Form {
     }
 
     class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
+
         private com.codename1.ui.Component cmp;
+
         public EventCallbackClass(com.codename1.ui.Component cmp) {
             this.cmp = cmp;
         }
@@ -69,11 +85,11 @@ public class SignInForm extends com.codename1.ui.Form {
 
         public void actionPerformed(com.codename1.ui.events.ActionEvent ev) {
             com.codename1.ui.Component sourceComponent = ev.getComponent();
-            if(sourceComponent.getParent().getLeadParent() != null) {
+            if (sourceComponent.getParent().getLeadParent() != null) {
                 sourceComponent = sourceComponent.getParent().getLeadParent();
             }
 
-            if(sourceComponent == gui_Button_2) {
+            if (sourceComponent == gui_Button_2) {
                 onButton_2ActionEvent(ev);
             }
         }
@@ -81,6 +97,7 @@ public class SignInForm extends com.codename1.ui.Form {
         public void dataChanged(int type, int index) {
         }
     }
+
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
         guiBuilderBindComponentListeners();
         setLayout(new com.codename1.ui.layouts.BorderLayout());
@@ -94,9 +111,9 @@ public class SignInForm extends com.codename1.ui.Form {
         gui_Component_Group_1.setName("Component_Group_1");
         gui_Component_Group_1.addComponent(gui_Text_Field_2);
         gui_Component_Group_1.addComponent(gui_Text_Field_1);
-        gui_Text_Field_2.setText("TextField");
+        gui_Text_Field_2.setText("user");
         gui_Text_Field_2.setName("Text_Field_2");
-        gui_Text_Field_1.setText("TextField");
+        gui_Text_Field_1.setText("user");
         gui_Text_Field_1.setName("Text_Field_1");
         gui_Container_1.addComponent(gui_Button_2);
         gui_Container_1.addComponent(gui_Button_3);
@@ -119,7 +136,75 @@ public class SignInForm extends com.codename1.ui.Form {
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
     public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
-        new InboxForm().show();
+        //new InboxForm().show();
+        ConnectionRequest con = new ConnectionRequest();
+        String name = gui_Text_Field_2.getText();
+        String pswd = gui_Text_Field_1.getText();
+        if (name.trim() != "" && pswd.trim() != "") {
+            con.setUrl("http://localhost/planners/web/app_dev.php/FindLoginID/" + name + "/" + pswd);
+
+            con.addResponseListener((NetworkEvent evt) -> {
+                ArrayList<User> listuser = (ArrayList<User>) getListUser(new String(con.getResponseData()));
+                if (!listuser.isEmpty()) {
+                    for (User e : listuser) {
+
+                        id = e.getId_u();
+                        /*  Curentuser c =new Curentuser();
+                    c.setCurrent(users.get("username").toString());
+                    c.setCurrentId(Integer.parseInt(users.get("id").toString()));
+                         */
+                        AccueilForm AccueilF = new AccueilForm();
+                        AccueilF.show();
+                    }
+                } else {
+                    Dialog.show("Erreur d'authentification", "Verifier votre Nom d'utilisateur ou mot de passe!!", "OK", "Annuler");
+
+                }
+            });
+            NetworkManager.getInstance().addToQueue(con);
+        } else {
+            Dialog.show("Erreur d'authentification", "Veuillez saisir le Nom d'utilisateur ou mot de passe!!", "OK", "Annuler");
+        }
     }
 
+    public ArrayList<User> getListUser(String json) {
+        ArrayList<User> listUser = new ArrayList<>();
+
+        try {
+
+            JSONParser j = new JSONParser();
+            Map<String, Object> sejours = j.parseJSON(new CharArrayReader(json.toCharArray()));
+            System.out.println();
+            ArrayList<Map<String, Object>> list = (ArrayList<Map<String, Object>>) sejours.get("root");
+
+            for (Map<String, Object> obj : list) {
+                User e = new User();
+                // System.out.println("com.mycompany.myapp.MyApplication.getList()"+e);
+                float id = Float.parseFloat(obj.get("id").toString());
+                e.setId_u((int) id);
+                //  e.setDateDeSejour(obj.get("dateDeSejour").toString());
+                if (obj.get("username") != null) {
+                    e.setLogin(obj.get("username").toString());
+                }
+                if (obj.get("password") != null) {
+                    e.setPassword(obj.get("password").toString());
+                }
+
+                if (obj.get("nom") != null) {
+                    e.setNom(obj.get("nom").toString());
+                }
+                if (obj.get("prenom") != null) {
+                    e.setPrenom(obj.get("prenom").toString());
+                }
+
+                float fidelite = Float.parseFloat(obj.get("pointFidelite").toString());
+                e.setPoint_fidelite((int) fidelite);
+
+                listUser.add(e);
+            }
+        } catch (IOException ex) {
+        }
+        return listUser;
+
+    }
 }

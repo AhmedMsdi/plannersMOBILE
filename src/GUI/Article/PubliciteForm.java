@@ -476,6 +476,7 @@ public class PubliciteForm extends BaseForm {
          NetworkManager.getInstance().addToQueueAndWait(con);
          ServicePublicite serviceTask=new ServicePublicite();
             WalkthruPubForm.listTasks = serviceTask.getList2();
+            
          PubliciteForm h=new PubliciteForm();
                                 h.show();
          

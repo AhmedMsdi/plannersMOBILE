@@ -21,6 +21,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import Entity.publicite;
 import GUI.Article.PubliciteForm;
+import com.codename1.ui.Container;
 import com.codename1.ui.FontImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.Map;
 public class ServicePublicite {
 
         
-    public static String serverAhmed ="192.168.1.9";
+    public static String serverAhmed ="192.168.1.6";
     public static double[] values1 = new double[2];
     public static String[] values2 = new String[2];
    public static ArrayList<String> titres=new ArrayList<String>();  
@@ -59,6 +60,17 @@ public class ServicePublicite {
 //            Dialog.show("error", "login ou pwd invalid", "ok", null);
 //            }
         });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+    }
+    
+     public void clickPub(String ta) {
+         int id = (int)Float.parseFloat(ta);
+         
+        ConnectionRequest con = new ConnectionRequest();
+        String Url = "http://"+serverAhmed+"/planners/web/app_dev.php/click/"+ta;
+        con.setUrl(Url);
+        
+   
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
 
@@ -176,7 +188,13 @@ public Form createPieChartForm() {
     double[] values = new double[]{12, 14, 11, 10, 19};
 
     // Set up the renderer
-    int[] colors = new int[]{ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN};
+    int[] colors = new int[]{ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN
+            , ColorUtil.BLACK, ColorUtil.WHITE,ColorUtil.GRAY,ColorUtil.MAGENTA,ColorUtil.LTGRAY,ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN
+            , ColorUtil.BLACK, ColorUtil.WHITE,ColorUtil.GRAY,ColorUtil.MAGENTA,ColorUtil.LTGRAY,ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN
+            , ColorUtil.BLACK, ColorUtil.WHITE,ColorUtil.GRAY,ColorUtil.MAGENTA,ColorUtil.LTGRAY,ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN
+            , ColorUtil.BLACK, ColorUtil.WHITE,ColorUtil.GRAY,ColorUtil.MAGENTA,ColorUtil.LTGRAY,ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN
+            , ColorUtil.BLACK, ColorUtil.WHITE,ColorUtil.GRAY,ColorUtil.MAGENTA,ColorUtil.LTGRAY,ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN
+            , ColorUtil.BLACK, ColorUtil.WHITE,ColorUtil.GRAY,ColorUtil.MAGENTA,ColorUtil.LTGRAY};
     DefaultRenderer renderer = buildCategoryRenderer(colors);
     renderer.setZoomButtonsVisible(true);
     renderer.setZoomEnabled(true);
@@ -194,11 +212,15 @@ public Form createPieChartForm() {
     PieChart chart = new PieChart(buildCategoryDataset(titres, clicks), renderer);
 
     // Wrap the chart in a Component so we can add it to a form
+    Container c1 = new Container();
     ChartComponent c = new ChartComponent(chart);
-
+ c1.getStyle().setBgColor(0x99CCCC);
+ c1.getStyle().setBgTransparency(255);
+ c1.add(c);
     // Create a form and show it.
     Form f = new Form("Nombre de clicks", new BorderLayout());
-    f.add(BorderLayout.CENTER, c);
+   
+    f.add(BorderLayout.CENTER, c1);
      f.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_KEYBOARD_BACKSPACE, e -> {
              PubliciteForm h=new PubliciteForm();
                                 h.show();

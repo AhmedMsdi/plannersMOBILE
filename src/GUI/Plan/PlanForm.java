@@ -20,9 +20,38 @@ package GUI.Plan;
 
 import com.codename1.uikit.pheonixui.*;
 import com.codename1.components.ScaleImageLabel;
+import com.codename1.io.CharArrayReader;
+import com.codename1.io.JSONParser;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.plaf.Style;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+import Entity.Plan;
+import Entity.User;
+import Services.ServicePlans;
+import com.codename1.components.ImageViewer;
+import com.codename1.components.SpanLabel;
+import com.codename1.components.ToastBar;
+import com.codename1.io.ConnectionRequest;
+import com.codename1.io.NetworkEvent;
+import com.codename1.io.NetworkManager;
+import com.codename1.ui.Button;
+import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Form;
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
+import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.GridLayout;
+import com.codename1.ui.util.Resources;
 
 /**
  * GUI builder created Form
@@ -30,142 +59,234 @@ import com.codename1.ui.plaf.Style;
  * @author shai
  */
 public class PlanForm extends BaseForm {
-
-    public PlanForm() {
-        this(com.codename1.ui.util.Resources.getGlobalResources());
-    }
-    
-    public PlanForm(com.codename1.ui.util.Resources resourceObjectInstance) {
-        initGuiBuilderComponents(resourceObjectInstance);
-        gui_separator1.setShowEvenIfBlank(true);
-        gui_Label_1_1_1.setShowEvenIfBlank(true);
-        
-        ScaleImageLabel sl = new ScaleImageLabel(resourceObjectInstance.getImage("skate-park.jpg"));
-        sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-        gui_imageContainer1.add(BorderLayout.CENTER, sl);
-        sl = new ScaleImageLabel(resourceObjectInstance.getImage("bridge.jpg"));
-        sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-        gui_imageContainer2.add(BorderLayout.CENTER, sl);
-        
-        installSidemenu(resourceObjectInstance);
-        getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_PUBLIC, e -> {});
-        
-        FontImage.setMaterialIcon(gui_LA, FontImage.MATERIAL_LOCATION_ON);
-        gui_LA.setIconPosition(BorderLayout.EAST);
-
-        FontImage.setMaterialIcon(gui_newYork, FontImage.MATERIAL_LOCATION_ON);
-        gui_newYork.setIconPosition(BorderLayout.EAST);
-        
-        gui_Text_Area_2.setRows(2);
-        gui_Text_Area_2.setColumns(100);
-        gui_Text_Area_2.setGrowByContent(false);
-        gui_Text_Area_2.setEditable(false);
-        gui_Text_Area_1.setRows(2);
-        gui_Text_Area_1.setColumns(100);
-        gui_Text_Area_1.setGrowByContent(false);
-        gui_Text_Area_1.setEditable(false);
-    }
-
-//-- DON'T EDIT BELOW THIS LINE!!!
-    private com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
+    public static String motrech=""; 
+            private com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
     private com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
     private com.codename1.components.MultiButton gui_LA = new com.codename1.components.MultiButton();
     private com.codename1.ui.Container gui_imageContainer1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
     private com.codename1.ui.Container gui_Container_2 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
     private com.codename1.ui.TextArea gui_Text_Area_1 = new com.codename1.ui.TextArea();
     private com.codename1.ui.Button gui_Button_1 = new com.codename1.ui.Button();
-    private com.codename1.ui.Label gui_separator1 = new com.codename1.ui.Label();
-    private com.codename1.ui.Container gui_null_1_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
-    private com.codename1.components.MultiButton gui_null_1_1_1 = new com.codename1.components.MultiButton();
-    private com.codename1.components.MultiButton gui_newYork = new com.codename1.components.MultiButton();
-    private com.codename1.ui.Container gui_imageContainer2 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
-    private com.codename1.ui.Container gui_Container_3 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
-    private com.codename1.ui.TextArea gui_Text_Area_2 = new com.codename1.ui.TextArea();
-    private com.codename1.ui.Button gui_Button_2 = new com.codename1.ui.Button();
-    private com.codename1.ui.Label gui_Label_1_1_1 = new com.codename1.ui.Label();
+    private com.codename1.ui.Label gui_separator1 = new com.codename1.ui.Label(); 
+private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
+ private  com.codename1.ui.TextField zoneRecherche  = new com.codename1.ui.TextField();
+    public PlanForm() {
+        this(com.codename1.ui.util.Resources.getGlobalResources());
+    }
+    public PlanForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+         
+        initGuiBuilderComponents(resourceObjectInstance);
+      
+        getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_PUBLIC, e -> {
+            
+             
+            
+        });
+          boutonRecherche.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                    onButton_2ActionEvent(evt);
+            }
+        }));
 
+    }
+  private void guiBuilderBindComponentListeners() {
+        PlanForm.EventCallbackClass callback = new PlanForm.EventCallbackClass();
+        boutonRecherche.addActionListener(callback);
+    }
+    class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
 
+        private com.codename1.ui.Component cmp;
+
+        public EventCallbackClass(com.codename1.ui.Component cmp) {
+            this.cmp = cmp;
+        }
+
+        public EventCallbackClass() {
+        }
+
+        public void actionPerformed(com.codename1.ui.events.ActionEvent ev) {
+            com.codename1.ui.Component sourceComponent = ev.getComponent();
+            if (sourceComponent.getParent().getLeadParent() != null) {
+                sourceComponent = sourceComponent.getParent().getLeadParent();
+            }
+
+          /*  if (sourceComponent == boutonRecherche) {
+                onButton_2ActionEvent(ev);
+            }*/
+        }
+
+        public void dataChanged(int type, int index) {
+        }
+    }
+ 
+    public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
+           
+ 
+          
+
+    }
+
+//-- DON'T EDIT BELOW THIS LINE!!!
+   
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
-        setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
-        setTitle("Trending");
-        setName("TrendingForm");
-        addComponent(gui_Container_1);
-        gui_Container_1.setName("Container_1");
-        gui_Container_1.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Multi_Button_1);
-        gui_Container_1.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_LA);
-        gui_Multi_Button_1.setUIID("Label");
-        gui_Multi_Button_1.setName("Multi_Button_1");
-        gui_Multi_Button_1.setIcon(resourceObjectInstance.getImage("contact-c.png"));
-        gui_Multi_Button_1.setPropertyValue("line1", "Ami Koehler");
-        gui_Multi_Button_1.setPropertyValue("line2", "@dropperidiot");
-        gui_Multi_Button_1.setPropertyValue("uiid1", "Label");
-        gui_Multi_Button_1.setPropertyValue("uiid2", "RedLabel");
-        gui_LA.setUIID("Label");
-        gui_LA.setName("LA");
-        gui_LA.setPropertyValue("line1", "3 minutes ago");
-        gui_LA.setPropertyValue("line2", "in Los Angeles");
-        gui_LA.setPropertyValue("uiid1", "SlightlySmallerFontLabel");
-        gui_LA.setPropertyValue("uiid2", "RedLabelRight");
-        addComponent(gui_imageContainer1);
-        gui_imageContainer1.setName("imageContainer1");
-        gui_imageContainer1.addComponent(com.codename1.ui.layouts.BorderLayout.SOUTH, gui_Container_2);
-        gui_Container_2.setName("Container_2");
-        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Text_Area_1);
-        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_1);
-        gui_Text_Area_1.setText("The park is a favorite among skaters in California and it definitely deserves it. The park is complete with plenty of smooth banks to gain a ton of speed in the flow bowl.");
-        gui_Text_Area_1.setUIID("SlightlySmallerFontLabelLeft");
-        gui_Text_Area_1.setName("Text_Area_1");
-        gui_Button_1.setText("");
-        gui_Button_1.setUIID("Label");
-        gui_Button_1.setName("Button_1");
-        com.codename1.ui.FontImage.setMaterialIcon(gui_Button_1,"".charAt(0));
-                gui_Container_2.setName("Container_2");
-        addComponent(gui_separator1);
-        addComponent(gui_null_1_1);
-        gui_null_1_1.setName("null_1_1");
-        gui_null_1_1.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_null_1_1_1);
-        gui_null_1_1.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_newYork);
-        gui_null_1_1_1.setUIID("Label");
-        gui_null_1_1_1.setName("null_1_1_1");
-        gui_null_1_1_1.setIcon(resourceObjectInstance.getImage("contact-b.png"));
-        gui_null_1_1_1.setPropertyValue("line1", "Detra Mcmunn");
-        gui_null_1_1_1.setPropertyValue("line2", "@dropperidiot");
-        gui_null_1_1_1.setPropertyValue("uiid1", "Label");
-        gui_null_1_1_1.setPropertyValue("uiid2", "RedLabel");
-        gui_newYork.setUIID("Label");
-        gui_newYork.setName("newYork");
-        gui_newYork.setPropertyValue("line1", "15 minutes ago");
-        gui_newYork.setPropertyValue("line2", "in New York");
-        gui_newYork.setPropertyValue("uiid1", "SlightlySmallerFontLabel");
-        gui_newYork.setPropertyValue("uiid2", "RedLabelRight");
-        addComponent(gui_imageContainer2);
-        gui_imageContainer2.setName("imageContainer2");
-        gui_imageContainer2.addComponent(com.codename1.ui.layouts.BorderLayout.SOUTH, gui_Container_3);
-        gui_Container_3.setName("Container_3");
-        gui_Container_3.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Text_Area_2);
-        gui_Container_3.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_2);
-        gui_Text_Area_2.setText("Griffith Observatory is a facility in Los Angeles, California sitting on the south-facing slope of Mount Hollywood in Los Angeles' Griffith Park.");
-        gui_Text_Area_2.setUIID("SlightlySmallerFontLabelLeft");
-        gui_Text_Area_2.setName("Text_Area_2");
-        gui_Button_2.setText("");
-        gui_Button_2.setUIID("Label");
-        gui_Button_2.setName("Button_2");
-        com.codename1.ui.FontImage.setMaterialIcon(gui_Button_2,"".charAt(0));
-        gui_Container_3.setName("Container_3");
-        addComponent(gui_Label_1_1_1);
-        gui_Container_1.setName("Container_1");
-        gui_imageContainer1.setName("imageContainer1");
-        gui_separator1.setUIID("Separator");
-        gui_separator1.setName("separator1");
-        gui_null_1_1.setName("null_1_1");
-        gui_imageContainer2.setName("imageContainer2");
-        gui_Label_1_1_1.setUIID("Separator");
-        gui_Label_1_1_1.setName("Label_1_1_1");
-    }// </editor-fold>
+        try {  
+            setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
+            setTitle("Divertissement");
+            setName("Divertissement");
+           // boutonRecherche.setText("Find");
+           // boutonRecherche.setName("Button_2");
+           
+      
+         
+            ConnectionRequest con = new ConnectionRequest();
+       con.setUrl("http://127.0.0.1/planners/web/app_dev.php/tasks/allDiv");
+
+            con.addResponseListener(new ActionListener<NetworkEvent>() {
+                @Override
+                public void actionPerformed(NetworkEvent evt) {
+                    ServicePlans sc = new ServicePlans();
+                    ArrayList<Plan> l = (ArrayList<Plan>) sc.getList(new String(con.getResponseData()));
+
+                    for (Plan e : l) {
+
+                        gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
+                        gui_Multi_Button_1 = new com.codename1.components.MultiButton();
+                        gui_LA = new com.codename1.components.MultiButton();
+                        gui_imageContainer1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
+                        gui_Container_2 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
+                        gui_Text_Area_1 = new com.codename1.ui.TextArea();
+                        gui_Button_1 = new com.codename1.ui.Button();
+                        gui_separator1 = new com.codename1.ui.Label();
+
+                        gui_separator1.setShowEvenIfBlank(true);
+                        installSidemenu(resourceObjectInstance);
+
+                        FontImage.setMaterialIcon(gui_LA, FontImage.MATERIAL_LOCATION_ON);
+                        gui_LA.setIconPosition(BorderLayout.EAST);
+                        
+
+                        gui_Text_Area_1.setRows(2);
+                        gui_Text_Area_1.setColumns(100);
+                        gui_Text_Area_1.setGrowByContent(false);
+                        gui_Text_Area_1.setEditable(false);
+                        if (e.getImg() != null) {
+                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 180), true);
+                            URLImage.ImageAdapter adapter = null;
+                             URLImage iqsmgg1= URLImage.createToFileSystem(img1,  "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg(),  "http://localhost/planners/web/uploads/ImagesPlans/chz/" + e.getImg(), adapter);
+                           // URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg()); 
+                  URLImage imgg1= URLImage.createToStorage(img1, "http://localhost/planners/web/uploads/ImagesPlans/chz/" + e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
+               
+                            imgg1.fetch();
+                            ImageViewer imgv1 = new ImageViewer(imgg1);
+                            gui_imageContainer1.add(BorderLayout.CENTER, imgv1);
+                        } else {
+                            ScaleImageLabel sl = new ScaleImageLabel(resourceObjectInstance.getImage("skate-park.jpg"));
+
+                            sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+
+                            gui_imageContainer1.add(BorderLayout.CENTER, sl);
+                        }
+                        addComponent(gui_Container_1);
+                        gui_Container_1.setName("Container_1");
+                        gui_Container_1.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Multi_Button_1);
+                        gui_Container_1.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_LA);
+                        gui_Multi_Button_1.setUIID("Label");
+                        gui_Multi_Button_1.setName("Multi_Button_1");
+                        gui_Multi_Button_1.setIcon(resourceObjectInstance.getImage("contact-c.png"));
+                        gui_Multi_Button_1.setPropertyValue("line1", e.getLibelle());
+                        gui_Multi_Button_1.setPropertyValue("line2", e.getVille());
+                        gui_Multi_Button_1.setPropertyValue("uiid1", "Label");
+                        gui_Multi_Button_1.setPropertyValue("uiid2", "RedLabel");
+                        gui_LA.setUIID("Label");
+                        gui_LA.setName("LA");
+                        gui_LA.setPropertyValue("line1", e.getPrix());
+                        gui_LA.setPropertyValue("line2", e.getAdresse());
+                        gui_LA.setPropertyValue("uiid1", "SlightlySmallerFontLabel");
+                        gui_LA.setPropertyValue("uiid2", "RedLabelRight");
+                        addComponent(gui_imageContainer1);
+                        gui_imageContainer1.setName("imageContainer1");
+                        gui_imageContainer1.addComponent(com.codename1.ui.layouts.BorderLayout.SOUTH, gui_Container_2);
+                        gui_Container_2.setName("Container_2");
+                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Text_Area_1);
+                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_1);
+                        gui_Text_Area_1.setText(e.getDescription());
+                        gui_Text_Area_1.setUIID("SlightlySmallerFontLabelLeft");
+                        gui_Text_Area_1.setName("Text_Area_1");
+                        gui_Button_1.setText("");
+                        gui_Button_1.setUIID("Label");
+                        gui_Button_1.setName("Button_1");
+                        com.codename1.ui.FontImage.setMaterialIcon(gui_Button_1, "".charAt(0));
+                        gui_Container_2.setName("Container_2");
+
+                        gui_Button_1.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent evt) {
+                                Form consulter = new Form("Details", BoxLayout.y());
+                                // consulter.getStyle().setBgColor(0x99CCCC);
+                                consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
+                                    PlanForm pf = new PlanForm();
+                                    pf.show();
+
+                                });
+                                Container c = new Container(BoxLayout.y());
+                                Container C = new Container(new GridLayout(2, 1));
+                                consulter.add(c);
+                                consulter.add(C);
+
+                                Label sp = new Label();
+                                Label tit = new Label("  Libelle : ");
+                                Label Mes = new Label("  Description :");
+                                Label vil = new Label("  Ville : ");
+                                Label ad = new Label("  Adresse : ");
+
+                                Label Libelle = new Label();
+                                Label Adresse = new Label();
+                                Label ville = new Label();
+                                SpanLabel message = new SpanLabel();
+
+                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 150), true);
+                                URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
+                                imgg1.fetch();
+                                ImageViewer imgv1 = new ImageViewer(imgg1);
+                                c.add(sp);
+                                c.add(tit);
+                                c.add(Libelle);
+                                c.add(vil);
+                                c.add(ville);
+                                c.add(ad);
+                                c.add(Adresse);
+                                c.add(Mes);
+                                c.add(message);
+                                c.add(imgv1);
+
+                                Libelle.setText("  " + e.getLibelle());
+                                ville.setText("  " + e.getVille());
+                                Adresse.setText("  " + e.getAdresse());
+                                message.setText("  " + e.getDescription());
+
+                                consulter.show();
+                                tit.getStyle().setFgColor(0xFF3366);
+                                Mes.getStyle().setFgColor(0xFF3366);
+                                vil.getStyle().setFgColor(0xFF3366);
+                                ad.getStyle().setFgColor(0xFF3366);
+                            }
+                        });
+                        addComponent(gui_separator1);
+                    }
+                }
+
+            });
+      
+            NetworkManager.getInstance().addToQueueAndWait(con);
+        } catch (Exception e) {
+            ToastBar.showMessage(e.getMessage(), FontImage.MATERIAL_PLACE);
+        }
+    }
+// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
-
     @Override
     protected boolean isCurrentTrending() {
         return true;

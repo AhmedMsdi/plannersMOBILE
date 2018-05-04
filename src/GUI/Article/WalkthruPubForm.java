@@ -44,6 +44,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * GUI builder created Form
@@ -139,33 +140,36 @@ public class WalkthruPubForm extends com.codename1.ui.Form {
         
               ServicePublicite serviceTask=new ServicePublicite();
         listTasks = serviceTask.getList2();
+         int r =new Random().nextInt(listTasks.size());
+         int r1 =new Random().nextInt(listTasks.size());
+         int r2 =new Random().nextInt(listTasks.size());
          
-         titre1=listTasks.get(0).getTitre_pub();
-         desc1=listTasks.get(0).getDesc_pub();
-        site1=listTasks.get(0).getSite_pub();
+         titre1=listTasks.get(r).getTitre_pub();
+         desc1=listTasks.get(r).getDesc_pub();
+        site1=listTasks.get(r).getSite_pub();
       
-         titre2=listTasks.get(1).getTitre_pub();
-         desc2=listTasks.get(1).getDesc_pub();
-        site2=listTasks.get(1).getSite_pub();
+         titre2=listTasks.get(r1).getTitre_pub();
+         desc2=listTasks.get(r1).getDesc_pub();
+        site2=listTasks.get(r1).getSite_pub();
         
-         titre3=listTasks.get(2).getTitre_pub();
-         desc3=listTasks.get(2).getDesc_pub();
-        site3=listTasks.get(2).getSite_pub();
+         titre3=listTasks.get(r2).getTitre_pub();
+         desc3=listTasks.get(r2).getDesc_pub();
+        site3=listTasks.get(r2).getSite_pub();
          
        
          EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(1000, 600), true);
-                            URLImage imgg1 = URLImage.createToStorage(img1, listTasks.get(0).getImg_pub(),
-                                    "http://localhost/planners/web/"+listTasks.get(0).getImg_pub());
+                            URLImage imgg1 = URLImage.createToStorage(img1, listTasks.get(r).getImg_pub(),
+                                    "http://localhost/planners/web/"+listTasks.get(r).getImg_pub());
                             imgg1.fetch();
                             
                               EncodedImage img2 = EncodedImage.createFromImage(Image.createImage(1000, 600), true);
-                            URLImage imgg2 = URLImage.createToStorage(img2, listTasks.get(1).getImg_pub(),
-                                    "http://localhost/planners/web/"+listTasks.get(2).getImg_pub());
+                            URLImage imgg2 = URLImage.createToStorage(img2, listTasks.get(r1).getImg_pub(),
+                                    "http://localhost/planners/web/"+listTasks.get(r1).getImg_pub());
                             imgg2.fetch();
                             
                               EncodedImage img3 = EncodedImage.createFromImage(Image.createImage(1000, 600), true);
-                            URLImage imgg3 = URLImage.createToStorage(img3, listTasks.get(2).getImg_pub(),
-                                    "http://localhost/planners/web/"+listTasks.get(2).getImg_pub());
+                            URLImage imgg3 = URLImage.createToStorage(img3, listTasks.get(r2).getImg_pub(),
+                                    "http://localhost/planners/web/"+listTasks.get(r2).getImg_pub());
                             imgg3.fetch();
                  
          
@@ -253,17 +257,20 @@ public class WalkthruPubForm extends com.codename1.ui.Form {
      //  gui_tab1Root.add(BorderLayout.SOUTH, t1);
         content1.setLeadComponent(t1);
         t1.addActionListener(l->{
-           Display.getInstance().execute(listTasks.get(0).getSite_pub());   
+            serviceTask.clickPub(listTasks.get(r).getId_pub());
+           Display.getInstance().execute(listTasks.get(r).getSite_pub());   
            
         });
          content2.setLeadComponent(t2);
         t2.addActionListener(l->{
- Display.getInstance().execute(listTasks.get(1).getSite_pub());   
+             serviceTask.clickPub(listTasks.get(r1).getId_pub());
+ Display.getInstance().execute(listTasks.get(r1).getSite_pub());   
         });
         
          content3.setLeadComponent(t3);
         t3.addActionListener(l->{
- Display.getInstance().execute(listTasks.get(2).getSite_pub());   
+            serviceTask.clickPub(listTasks.get(r2).getId_pub());
+ Display.getInstance().execute(listTasks.get(r2).getSite_pub());   
         });
         
         

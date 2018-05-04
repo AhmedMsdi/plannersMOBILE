@@ -19,14 +19,12 @@
 package GUI.Article;
 
 import Entity.publicite;
-import Services.ServiceArticle;
 import Services.ServicePublicite;
+import ca.weblite.codename1.components.ckeditor.CKeditor;
 import com.codename1.components.ImageViewer;
 import com.codename1.uikit.pheonixui.*;
 import com.codename1.components.ScaleImageLabel;
-import com.codename1.io.ConnectionRequest;
 import com.codename1.io.FileSystemStorage;
-import com.codename1.io.JSONParser;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
@@ -38,16 +36,14 @@ import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.ImageIO;
 import com.codename1.util.Base64;
+import static com.codename1.util.StringUtil.replaceAll;
 import java.util.ArrayList;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Map;
+
   
 
 /**
@@ -79,12 +75,18 @@ public class AddPubForm extends BaseForm {
     TextField tdesc= new TextField("","Description");
     TextField ttags= new TextField("","Tags");
     TextField tsite= new TextField("","Site");
+   
        C.add(tnom);
        C.add(tdesc);
        C.add(ttags);
        C.add(tsite);
        C.add(btnajout);
        C.add(btnimage);
+       
+        CKeditor editor = new CKeditor();
+    editor.initLater();
+    
+ C.add(editor);
        
          btnimage.addActionListener(new ActionListener() {
             @Override
@@ -124,7 +126,15 @@ public class AddPubForm extends BaseForm {
         btnajout.addActionListener(e->{
               ServicePublicite ser = new ServicePublicite();
            UploadImage.imageupload(imagecode, tnom.getText());
-            publicite p=new publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),tdesc.getText(),ttags.getText());
+           String desc= editor.getData();
+        
+                 //imagecode = Base64.encode(desc);
+           desc=replaceAll(desc,"<", "%3C");
+            desc=replaceAll(desc,">", "%3E");
+            desc=replaceAll(desc,"/", "%2F");
+          //  desc=replaceAll(desc,"\\", "%5C");
+           //String desc1=desc.replaceAll(">", "\\u003E");
+            publicite p=new publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),desc,ttags.getText());
             ser.ajoutTask(p);
              ServicePublicite serviceTask=new ServicePublicite();
             WalkthruPubForm.listTasks = serviceTask.getList2();
