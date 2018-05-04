@@ -23,6 +23,7 @@ import Entity.publicite;
 import GUI.Article.PubliciteForm;
 import com.codename1.ui.Container;
 import com.codename1.ui.FontImage;
+import com.codename1.uikit.pheonixui.SignInForm;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,8 @@ public class ServicePublicite {
     public void ajoutTask(publicite ta) {
         ConnectionRequest con = new ConnectionRequest();
         String Url = "http://"+serverAhmed+"/planners/web/app_dev.php/pubjsonnew?text=" + ta.getTitre_pub()
-                + "&description=" + ta.getDesc_pub() +"&siteweb="+ta.getSite_pub()+"&tags="+ta.getTags()+"&image="+ta.getImg_pub();
+                + "&description=" + ta.getDesc_pub() +"&siteweb="+ta.getSite_pub()+"&tags="+ta.getTags()
+                +"&image="+ta.getImg_pub()+"&idUser="+SignInForm.id;
         con.setUrl(Url);
 
         System.out.println("tt");

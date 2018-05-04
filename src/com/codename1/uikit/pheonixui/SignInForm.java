@@ -149,6 +149,7 @@ public class SignInForm extends com.codename1.ui.Form {
                     for (User e : listuser) {
 
                         id = e.getId_u();
+                      
                         /*  Curentuser c =new Curentuser();
                     c.setCurrent(users.get("username").toString());
                     c.setCurrentId(Integer.parseInt(users.get("id").toString()));

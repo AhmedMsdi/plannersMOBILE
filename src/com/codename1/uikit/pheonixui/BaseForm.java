@@ -22,6 +22,7 @@ import GUI.AccueilForm;
 import GUI.Article.PubliciteForm;
 import GUI.Event.EventForm;
 import GUI.Hebergement.HebergementForm;
+//import GUI.Hebergement.HebergementForm;
 import GUI.MonprofilForm;
 import GUI.Plan.PlanForm;
 import GUI.Plan.PlanFormBienEtre;

@@ -12,6 +12,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import Entity.Hebergement;
+import com.codename1.uikit.pheonixui.SignInForm;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,8 @@ public class ServiceHebergement {
     public void ajoutHeb(Hebergement hb) {
         ConnectionRequest con = new ConnectionRequest();
      String Url =  "http://localhost/planners/web/app_dev.php/hebergement/newM?titre="+hb.getTitre()+"&categorie="+hb.getCategorie()+"&photo="+hb.getPhoto()
-             + "&prix="+hb.getPrix()+"&description="+hb.getDescription()+"&tel="+hb.getTel()+"&lieu="+hb.getLieu()+"&siteWeb="+hb.getSite_web();
+             + "&prix="+hb.getPrix()+"&description="+hb.getDescription()+"&tel="+hb.getTel()+"&lieu="+hb.getLieu()
+             +"&siteWeb="+hb.getSite_web()+"&idUser="+SignInForm.id;
         con.setUrl(Url);
 
         System.out.println("tt");

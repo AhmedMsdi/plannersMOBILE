@@ -134,7 +134,7 @@ public class AddPubForm extends BaseForm {
             desc=replaceAll(desc,"/", "%2F");
           //  desc=replaceAll(desc,"\\", "%5C");
            //String desc1=desc.replaceAll(">", "\\u003E");
-            publicite p=new publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),desc,ttags.getText());
+            publicite p=new publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),tdesc.getText(),ttags.getText());
             ser.ajoutTask(p);
              ServicePublicite serviceTask=new ServicePublicite();
             WalkthruPubForm.listTasks = serviceTask.getList2();
