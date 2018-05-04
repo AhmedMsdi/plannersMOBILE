@@ -111,9 +111,9 @@ public class SignInForm extends com.codename1.ui.Form {
         gui_Component_Group_1.setName("Component_Group_1");
         gui_Component_Group_1.addComponent(gui_Text_Field_2);
         gui_Component_Group_1.addComponent(gui_Text_Field_1);
-        gui_Text_Field_2.setText("user");
+        gui_Text_Field_2.setText("ch");
         gui_Text_Field_2.setName("Text_Field_2");
-        gui_Text_Field_1.setText("user");
+        gui_Text_Field_1.setText("ch");
         gui_Text_Field_1.setName("Text_Field_1");
         gui_Container_1.addComponent(gui_Button_2);
         gui_Container_1.addComponent(gui_Button_3);
