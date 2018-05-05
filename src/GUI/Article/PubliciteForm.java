@@ -18,7 +18,7 @@
  */
 package GUI.Article;
 
-import Entity.publicite;
+import Entity.Publicite;
 import Services.ServiceArticle;
 import Services.ServicePublicite;
 import com.codename1.components.FloatingActionButton;
@@ -60,7 +60,7 @@ public class PubliciteForm extends BaseForm {
     
     public PubliciteForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
-        setTitle("Articles");
+        setTitle("Publicités");
         setName("TrendingForm");
         
     
@@ -193,7 +193,7 @@ public class PubliciteForm extends BaseForm {
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
          ServicePublicite serviceTask=new ServicePublicite();
        //  ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:WalkthruPubForm.listTasks){
+        for(Publicite pub:WalkthruPubForm.listTasks){
             
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
@@ -319,8 +319,10 @@ public class PubliciteForm extends BaseForm {
                                a.add(gui_Container_1);
                             a.add(gui_imageContainer1);
                                            Button b = new Button("Supprimer");
+                                         
+                                           if ( (int)Float.parseFloat(pub.getId_u())==SignInForm.id){
                          a.add(b);
-                    
+                                           }
                      b.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
@@ -343,9 +345,9 @@ public class PubliciteForm extends BaseForm {
 
     
         private void initGuiBuilderComponentsR(com.codename1.ui.util.Resources resourceObjectInstance,String text) {
-         ServicePublicite serviceTask=new ServicePublicite();
+    /*     ServicePublicite serviceTask=new ServicePublicite();
        //  ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:WalkthruPubForm.listTasks){
+        for(Publicite pub:WalkthruPubForm.listTasks){
             if(pub.getTitre_pub().contains(text)){
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
@@ -431,7 +433,7 @@ public class PubliciteForm extends BaseForm {
         gui_Label_1_1_1.setUIID("Separator");
         gui_Label_1_1_1.setName("Label_1_1_1");
         
-         /****/
+       
           Button bb = new Button();
                         gui_imageContainer1.setLeadComponent(bb);
 
@@ -464,9 +466,12 @@ public class PubliciteForm extends BaseForm {
                               gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_pub());
                                a.add(gui_Container_1);
                             a.add(gui_imageContainer1);
+                          if (Integer.parseInt(pub.getId_u())==SignInForm.id){
+                             // System.out.println("ahmeeeeeeeeeeeeeed "+ Integer.parseInt(pub.getId_u()));
                                            Button b = new Button("Supprimer");
-                         a.add(b);
-                    
+                                          
+                     a.add(b);
+                                           
                      b.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
@@ -482,13 +487,13 @@ public class PubliciteForm extends BaseForm {
          
                         }
                         
-                        });
+                        });  }
                             a.show();
                             
                         }
                    });
           }
-        }
+        }*/
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!

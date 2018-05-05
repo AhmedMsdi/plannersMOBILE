@@ -18,7 +18,7 @@
  */
 package GUI.Article;
 
-import Entity.publicite;
+import Entity.Publicite;
 import Services.ServiceArticle;
 import Services.ServicePublicite;
 import com.codename1.components.ImageViewer;
@@ -102,8 +102,8 @@ public class VoidForm extends BaseForm {
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
          ServicePublicite serviceTask=new ServicePublicite();
-         ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:listTasks){
+         ArrayList<Publicite> listTasks = serviceTask.getList2();
+        for(Publicite pub:listTasks){
             
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();

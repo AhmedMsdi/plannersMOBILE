@@ -5,6 +5,8 @@
  */
 package Entity;
 
+import java.util.Date;
+
 
 
 /**
@@ -12,127 +14,97 @@ package Entity;
  * @author a7med
  */
 
-public class publicite {
-      String id_pub;
-    String titre_pub;
-    String img_pub;
-    String site_pub;
-    String desc_pub;
+public class Article {
+      String id_article;
+    String titre_article;
+    String img_article;
+    Date date_article;
+    String contenu;
     String id_u;
-    int nb_click;
     String tags;
-    int etat_pub;
+    int etat_article;
 
-    public publicite() {
+    public Article() {
     }
 
-    public publicite(String id_pub, String titre_pub, String img_pub, String site_pub, String desc_pub, String id_u,int nb_click,int etat_pub) {
-        this.id_pub = id_pub;
-        this.titre_pub = titre_pub;
-        this.img_pub = img_pub;
-        this.site_pub = site_pub;
-        this.desc_pub = desc_pub;
-        this.id_u = id_u;
-        this.nb_click=nb_click;
-        this.etat_pub=etat_pub;
-    }
-      public publicite( String titre_pub, String img_pub, String site_pub, String desc_pub, String tags) {
-       
-        this.titre_pub = titre_pub;
-        this.img_pub = img_pub;
-        this.site_pub = site_pub;
-        this.desc_pub = desc_pub;
-        this.tags = tags;
-       
+   
+      public Article( String titre_article, String img_article, String contenu,
+              String tags) {
+ 
+          this.titre_article=titre_article;
+          this.img_article=img_article;
+         
+          this.contenu=contenu;
+          this.tags=tags;
     }
 
-    public publicite(String titre_pub, String img_pub, String site_pub) {
-        this.titre_pub = titre_pub;
-        this.img_pub = img_pub;
-        this.site_pub = site_pub;
+    public String getContenu() {
+        return contenu;
     }
 
-    public int getEtat_pub() {
-        return etat_pub;
+    public Date getDate_article() {
+        return date_article;
     }
 
-    public void setEtat_pub(int etat_pub) {
-        this.etat_pub = etat_pub;
+    public int getEtat_article() {
+        return etat_article;
     }
 
-    
+    public String getId_article() {
+        return id_article;
+    }
+
+    public String getId_u() {
+        return id_u;
+    }
+
+    public String getImg_article() {
+        return img_article;
+    }
+
     public String getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public String getTitre_article() {
+        return titre_article;
     }
 
-
-    public int getNb_click() {
-        return nb_click;
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 
-    public void setNb_click(int nb_click) {
-        this.nb_click = nb_click;
+    public void setDate_article(Date date_article) {
+        this.date_article = date_article;
     }
-   
 
-    public String getId_u() {
-        return id_u;
+    public void setEtat_article(int etat_article) {
+        this.etat_article = etat_article;
+    }
+
+    public void setId_article(String id_article) {
+        this.id_article = id_article;
     }
 
     public void setId_u(String id_u) {
         this.id_u = id_u;
     }
 
-    
-
-    public String getId_pub() {
-        return id_pub;
+    public void setImg_article(String img_article) {
+        this.img_article = img_article;
     }
 
-    public void setId_pub(String id_pub) {
-        this.id_pub = id_pub;
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
-  
+    public void setTitre_article(String titre_article) {
+        this.titre_article = titre_article;
+    }
+      
+      
+      
 
-    public void setImg_pub(String img_pub) {
-        this.img_pub = img_pub;
-    }
 
-    public String getImg_pub() {
-        return img_pub;
-    }
 
-    public String getDesc_pub() {
-        return desc_pub;
-    }
-
-    public String getSite_pub() {
-        return site_pub;
-    }
-
-    public String getTitre_pub() {
-        return titre_pub;
-    }
-
-    public void setDesc_pub(String desc_pub) {
-        this.desc_pub = desc_pub;
-    }
-
-    public void setSite_pub(String site_pub) {
-        this.site_pub = site_pub;
-    }
-
-    public void setTitre_pub(String titre_pub) {
-        this.titre_pub = titre_pub;
-    }
-    
-     @Override
-    public String toString() {
-        return "Publicite{" + "id=" + id_pub + ", nom=" + titre_pub + ", desc=" + desc_pub + '}';
-    }
 }

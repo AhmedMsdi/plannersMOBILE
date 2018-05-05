@@ -21,6 +21,7 @@ package com.codename1.uikit.pheonixui;
 import Entity.Plan;
 import Entity.User;
 import GUI.AccueilForm;
+import GUI.Article.PubliciteForm;
 import Services.ServicePlans;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -154,7 +155,9 @@ public class SignInForm extends com.codename1.ui.Form {
                     c.setCurrent(users.get("username").toString());
                     c.setCurrentId(Integer.parseInt(users.get("id").toString()));
                          */
-                        AccueilForm AccueilF = new AccueilForm();
+                       /* AccueilForm AccueilF = new AccueilForm();
+                        AccueilF.show();*/
+                        PubliciteForm AccueilF = new PubliciteForm();
                         AccueilF.show();
                     }
                 } else {

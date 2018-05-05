@@ -12,7 +12,7 @@ package Entity;
  * @author a7med
  */
 
-public class publicite {
+public class Publicite {
       String id_pub;
     String titre_pub;
     String img_pub;
@@ -23,10 +23,10 @@ public class publicite {
     String tags;
     int etat_pub;
 
-    public publicite() {
+    public Publicite() {
     }
 
-    public publicite(String id_pub, String titre_pub, String img_pub, String site_pub, String desc_pub, String id_u,int nb_click,int etat_pub) {
+    public Publicite(String id_pub, String titre_pub, String img_pub, String site_pub, String desc_pub, String id_u,int nb_click,int etat_pub) {
         this.id_pub = id_pub;
         this.titre_pub = titre_pub;
         this.img_pub = img_pub;
@@ -36,7 +36,7 @@ public class publicite {
         this.nb_click=nb_click;
         this.etat_pub=etat_pub;
     }
-      public publicite( String titre_pub, String img_pub, String site_pub, String desc_pub, String tags) {
+      public Publicite( String titre_pub, String img_pub, String site_pub, String desc_pub, String tags) {
        
         this.titre_pub = titre_pub;
         this.img_pub = img_pub;
@@ -46,7 +46,7 @@ public class publicite {
        
     }
 
-    public publicite(String titre_pub, String img_pub, String site_pub) {
+    public Publicite(String titre_pub, String img_pub, String site_pub) {
         this.titre_pub = titre_pub;
         this.img_pub = img_pub;
         this.site_pub = site_pub;

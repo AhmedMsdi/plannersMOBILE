@@ -19,7 +19,7 @@
 
 package GUI.Article;
 
-import Entity.publicite;
+import Entity.Publicite;
 import Services.ServicePublicite;
 import com.codename1.components.ImageViewer;
 import com.codename1.uikit.pheonixui.*;
@@ -53,7 +53,7 @@ import java.util.Random;
  */
 public class WalkthruPubForm extends com.codename1.ui.Form {
 
-   public static ArrayList<publicite> listTasks;
+   public static ArrayList<Publicite> listTasks;
     
     public WalkthruPubForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());

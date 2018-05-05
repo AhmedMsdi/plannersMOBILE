@@ -19,7 +19,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
-import Entity.publicite;
+import Entity.Publicite;
 import GUI.Article.PubliciteForm;
 import com.codename1.ui.Container;
 import com.codename1.ui.FontImage;
@@ -36,13 +36,13 @@ import java.util.Map;
 public class ServicePublicite {
 
         
-    public static String serverAhmed ="192.168.1.6";
+    public static String serverAhmed ="localhost";
     public static double[] values1 = new double[2];
     public static String[] values2 = new String[2];
    public static ArrayList<String> titres=new ArrayList<String>();  
    public static ArrayList<Double> clicks=new ArrayList<Double>(); 
 
-    public void ajoutTask(publicite ta) {
+    public void ajoutTask(Publicite ta) {
         ConnectionRequest con = new ConnectionRequest();
         String Url = "http://"+serverAhmed+"/planners/web/app_dev.php/pubjsonnew?text=" + ta.getTitre_pub()
                 + "&description=" + ta.getDesc_pub() +"&siteweb="+ta.getSite_pub()+"&tags="+ta.getTags()
@@ -76,9 +76,9 @@ public class ServicePublicite {
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
 
-    public ArrayList<publicite> getListTask(String json) {
+    public ArrayList<Publicite> getListTask(String json) {
 
-        ArrayList<publicite> listEtudiants = new ArrayList<>();
+        ArrayList<Publicite> listEtudiants = new ArrayList<>();
 
         try {
             System.out.println(json);
@@ -93,7 +93,7 @@ public class ServicePublicite {
                 clicks.clear();
             for (Map<String, Object> obj : list) {
                 
-                publicite e = new publicite();
+                Publicite e = new Publicite();
 
                 // System.out.println(obj.get("id"));
                // float id = Float.parseFloat(obj.get("idPub").toString());
@@ -105,7 +105,11 @@ public class ServicePublicite {
                 e.setSite_pub(obj.get("siteWeb").toString());
                 e.setDesc_pub(obj.get("description").toString());
                 //e.setNb_click();
-                
+              String user_id ="";
+                user_id = obj.get("user").toString();
+                String id_user=user_id.substring(user_id.indexOf("id=")+3, user_id.indexOf("prenom")-2);
+              //  System.out.println("7achty   "+id_user);
+             e.setId_u(id_user);
                 clicks.add(Double.parseDouble(obj.get("nbClick").toString()));
              //  values1[i]=Double.parseDouble(obj.get("nbClick").toString());
               //  values2[i]=e.getTitre_pub();
@@ -124,9 +128,9 @@ public class ServicePublicite {
         return listEtudiants;
 
     }
-   ArrayList<publicite> listTasks = new ArrayList<>();
+   ArrayList<Publicite> listTasks = new ArrayList<>();
     
-    public ArrayList<publicite> getList2(){       
+    public ArrayList<Publicite> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://"+serverAhmed+"/planners/web/app_dev.php/pubjson");  
         

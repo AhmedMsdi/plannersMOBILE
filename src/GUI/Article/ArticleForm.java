@@ -18,7 +18,7 @@
  */
 package GUI.Article;
 
-import Entity.publicite;
+import Entity.Article;
 import Services.ServiceArticle;
 import Services.ServicePublicite;
 import com.codename1.components.FloatingActionButton;
@@ -28,9 +28,7 @@ import com.codename1.components.ScaleImageLabel;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.Button;
-import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
-import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Image;
@@ -44,21 +42,19 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.RoundBorder;
 import com.codename1.ui.plaf.Style;
-import java.util.ArrayList;
-import com.codename1.util.Base64;
 
 /**
  * GUI builder created Form
  *
  * @author shai
  */
-public class PubliciteForm extends BaseForm {
+public class ArticleForm extends BaseForm {
 
-    public PubliciteForm() {
+    public ArticleForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
     
-    public PubliciteForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+    public ArticleForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
         setTitle("Articles");
         setName("TrendingForm");
@@ -126,17 +122,17 @@ public class PubliciteForm extends BaseForm {
            });
             c2.addActionListener(a);
             c3.addActionListener(a1->{
-              AddPubForm v = new AddPubForm();
+              AddArticleForm v = new AddArticleForm();
                 v.show();  
             });
             
             popup.setTransitionInAnimator(CommonTransitions.createEmpty());
             popup.setTransitionOutAnimator(CommonTransitions.createEmpty());
             popup.setDisposeWhenPointerOutOfBounds(true);
-            int t = PubliciteForm.this.getTintColor();
-            PubliciteForm.this.setTintColor(0);
-            popup.showPopupDialog(new Rectangle(PubliciteForm.this.getWidth() - 10, PubliciteForm.this.getHeight() - 10, 10, 10));
-            PubliciteForm.this.setTintColor(t);
+            int t = ArticleForm.this.getTintColor();
+            ArticleForm.this.setTintColor(0);
+            popup.showPopupDialog(new Rectangle(ArticleForm.this.getWidth() - 10, ArticleForm.this.getHeight() - 10, 10, 10));
+            ArticleForm.this.setTintColor(t);
             fab.setUIID("FloatingActionButton");
             fab.setIcon(oldImage);
             
@@ -191,9 +187,9 @@ public class PubliciteForm extends BaseForm {
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
-         ServicePublicite serviceTask=new ServicePublicite();
+         ServiceArticle serviceTask=new ServiceArticle();
        //  ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:WalkthruPubForm.listTasks){
+        for(Article pub:serviceTask.getList2()){
             
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
@@ -220,8 +216,8 @@ public class PubliciteForm extends BaseForm {
         gui_Label_1_1_1.setShowEvenIfBlank(true);
         
         EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(1000, 600), true);
-                            URLImage imgg1 = URLImage.createToStorage(img1, pub.getImg_pub(),
-                                    "http://"+ServicePublicite.serverAhmed+"/planners/web/"+pub.getImg_pub());
+                            URLImage imgg1 = URLImage.createToStorage(img1, pub.getImg_article(),
+                                    "http://"+ServicePublicite.serverAhmed+"/planners/web/"+pub.getImg_article());
                             imgg1.fetch();
                            // Image bla = imgg1.getImage("bla.jpg");
                             ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -243,7 +239,7 @@ public class PubliciteForm extends BaseForm {
         gui_Multi_Button_1.setUIID("Label");
         gui_Multi_Button_1.setName("Multi_Button_1");
         gui_Multi_Button_1.setIcon(resourceObjectInstance.getImage("contact-c.png"));
-        gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_pub());
+        gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_article());
         gui_Multi_Button_1.setPropertyValue("line2", "@dropperidiot");
         gui_Multi_Button_1.setPropertyValue("uiid1", "Label");
         gui_Multi_Button_1.setPropertyValue("uiid2", "RedLabel");
@@ -259,7 +255,7 @@ public class PubliciteForm extends BaseForm {
         gui_Container_2.setName("Container_2");
         gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Text_Area_1);
         gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_1);
-        gui_Text_Area_1.setText(pub.getDesc_pub());
+        gui_Text_Area_1.setText(pub.getDate_article()+"");
         gui_Text_Area_1.setUIID("SlightlySmallerFontLabelLeft");
         gui_Text_Area_1.setName("Text_Area_1");
         gui_Button_1.setText("");
@@ -288,7 +284,7 @@ public class PubliciteForm extends BaseForm {
                         public void actionPerformed(ActionEvent evt) {
                             VoidForm a = new VoidForm();
                              a.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_KEYBOARD_BACKSPACE, e -> {
-             PubliciteForm h=new PubliciteForm();
+             ArticleForm h=new ArticleForm();
                                 h.show();
         });
                             
@@ -302,8 +298,8 @@ public class PubliciteForm extends BaseForm {
                                  com.codename1.ui.Container gui_imageContainer1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
 
                           EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(1000, 600), true);
-                            URLImage imgg1 = URLImage.createToStorage(img1, pub.getImg_pub(),
-                                    "http://"+ServicePublicite.serverAhmed+"/planners/web/"+pub.getImg_pub());
+                            URLImage imgg1 = URLImage.createToStorage(img1, pub.getImg_article(),
+                                    "http://"+ServicePublicite.serverAhmed+"/planners/web/"+pub.getImg_article());
                             imgg1.fetch();
                            // Image bla = imgg1.getImage("bla.jpg");
                             ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -314,21 +310,23 @@ public class PubliciteForm extends BaseForm {
         gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Text_Area_1);
         gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_1);
         gui_Container_1.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Multi_Button_1);
-                              gui_Text_Area_1.setText(pub.getDesc_pub());
-                              gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_pub());
+                              gui_Text_Area_1.setText(pub.getContenu());
+                              gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_article());
                                a.add(gui_Container_1);
                             a.add(gui_imageContainer1);
                                            Button b = new Button("Supprimer");
+                                         
+                                           if ( (int)Float.parseFloat(pub.getId_u())==SignInForm.id){
                          a.add(b);
-                    
+                                           }
                      b.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
                              ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://"+ServicePublicite.serverAhmed+"/planners/web/app_dev.php/pubjsondelete/"+pub.getId_pub();
+        String Url = "http://"+ServicePublicite.serverAhmed+"/planners/web/app_dev.php/articlejsondelete/"+pub.getId_article();
         con.setUrl(Url);
          NetworkManager.getInstance().addToQueueAndWait(con);
-         PubliciteForm h=new PubliciteForm();
+         ArticleForm h=new ArticleForm();
                                 h.show();
          
                         }
@@ -343,9 +341,9 @@ public class PubliciteForm extends BaseForm {
 
     
         private void initGuiBuilderComponentsR(com.codename1.ui.util.Resources resourceObjectInstance,String text) {
-         ServicePublicite serviceTask=new ServicePublicite();
+    /*     ServicePublicite serviceTask=new ServicePublicite();
        //  ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:WalkthruPubForm.listTasks){
+        for(Publicite pub:WalkthruPubForm.listTasks){
             if(pub.getTitre_pub().contains(text)){
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
@@ -431,7 +429,7 @@ public class PubliciteForm extends BaseForm {
         gui_Label_1_1_1.setUIID("Separator");
         gui_Label_1_1_1.setName("Label_1_1_1");
         
-         /****/
+       
           Button bb = new Button();
                         gui_imageContainer1.setLeadComponent(bb);
 
@@ -464,9 +462,12 @@ public class PubliciteForm extends BaseForm {
                               gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_pub());
                                a.add(gui_Container_1);
                             a.add(gui_imageContainer1);
+                          if (Integer.parseInt(pub.getId_u())==SignInForm.id){
+                             // System.out.println("ahmeeeeeeeeeeeeeed "+ Integer.parseInt(pub.getId_u()));
                                            Button b = new Button("Supprimer");
-                         a.add(b);
-                    
+                                          
+                     a.add(b);
+                                           
                      b.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent evt) {
@@ -482,13 +483,13 @@ public class PubliciteForm extends BaseForm {
          
                         }
                         
-                        });
+                        });  }
                             a.show();
                             
                         }
                    });
           }
-        }
+        }*/
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!

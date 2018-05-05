@@ -19,7 +19,7 @@
 package com.codename1.uikit.pheonixui;
 
 import GUI.AccueilForm;
-import GUI.Article.PubliciteForm;
+import GUI.Article.ArticleForm;
 import GUI.Event.EventForm;
 import GUI.Hebergement.HebergementForm;
 //import GUI.Hebergement.HebergementForm;
@@ -32,9 +32,9 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 
 /**
  * Utility methods common to forms e.g. for binding the side menu
@@ -80,9 +80,15 @@ public class BaseForm extends Form {
         getToolbar().addCommandToSideMenu("Divertissement", statsImage, e -> new PlanForm(res).show());
         getToolbar().addCommandToSideMenu("Gastronomie", statsImage, e -> new PlanFormGastronomie(res).show());
         getToolbar().addCommandToSideMenu("Bien Etre", statsImage, e -> new PlanFormBienEtre(res).show());
-        getToolbar().addCommandToSideMenu("Evenements", calendarImage, e -> new EventForm(res).show());
+        getToolbar().addCommandToSideMenu("Evenements", calendarImage, e -> {
+            try {
+                new EventForm(res).show();
+            } catch (IOException ex) {
+                System.out.println("err");
+            }
+        });
         getToolbar().addCommandToSideMenu("Hebergements", null, e -> new HebergementForm(res).show());
-        getToolbar().addCommandToSideMenu("Articles", trendingImage, e -> new PubliciteForm(res).show());
+        getToolbar().addCommandToSideMenu("Articles", trendingImage, e -> new ArticleForm(res).show());
         getToolbar().addCommandToSideMenu("Mon Profil", null, e -> new MonprofilForm(res).show());
 
         // spacer

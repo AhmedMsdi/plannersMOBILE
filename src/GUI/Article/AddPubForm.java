@@ -18,7 +18,7 @@
  */
 package GUI.Article;
 
-import Entity.publicite;
+import Entity.Publicite;
 import Services.ServicePublicite;
 import ca.weblite.codename1.components.ckeditor.CKeditor;
 import com.codename1.components.ImageViewer;
@@ -64,7 +64,7 @@ public class AddPubForm extends BaseForm {
     
     public AddPubForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
-        setTitle("");
+        setTitle("Ajout Publicité");
         setName("TrendingForm");
         String defstring ="";
         
@@ -134,7 +134,7 @@ public class AddPubForm extends BaseForm {
             desc=replaceAll(desc,"/", "%2F");
           //  desc=replaceAll(desc,"\\", "%5C");
            //String desc1=desc.replaceAll(">", "\\u003E");
-            publicite p=new publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),tdesc.getText(),ttags.getText());
+            Publicite p=new Publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),tdesc.getText(),ttags.getText());
             ser.ajoutTask(p);
              ServicePublicite serviceTask=new ServicePublicite();
             WalkthruPubForm.listTasks = serviceTask.getList2();
@@ -189,9 +189,9 @@ public class AddPubForm extends BaseForm {
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
-         ServicePublicite serviceTask=new ServicePublicite();
-         ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:listTasks){
+    /*     ServicePublicite serviceTask=new ServicePublicite();
+         ArrayList<Publicite> listTasks = serviceTask.getList2();
+        for(Publicite pub:listTasks){
             
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
@@ -224,7 +224,7 @@ public class AddPubForm extends BaseForm {
         
          FontImage.setMaterialIcon(gui_LA, FontImage.MATERIAL_LOCATION_ON);
         gui_LA.setIconPosition(BorderLayout.EAST);
-        /****/
+     
           Button bb = new Button();
                         gui_imageContainer1.setLeadComponent(bb);
 
@@ -287,7 +287,7 @@ public class AddPubForm extends BaseForm {
         gui_Label_1_1_1.setUIID("Separator");
         gui_Label_1_1_1.setName("Label_1_1_1");
         
-          }
+          }*/
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!

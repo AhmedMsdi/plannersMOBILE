@@ -18,7 +18,9 @@
  */
 package GUI.Article;
 
-import Entity.publicite;
+import Entity.Article;
+import Entity.Publicite;
+import Services.ServiceArticle;
 import Services.ServicePublicite;
 import ca.weblite.codename1.components.ckeditor.CKeditor;
 import com.codename1.components.ImageViewer;
@@ -51,20 +53,20 @@ import java.io.IOException;
  *
  * @author shai
  */
-public class AddPubForm extends BaseForm {
+public class AddArticleForm extends BaseForm {
   
       Image img;
        String imagecode="";
 
-    public AddPubForm() {
+    public AddArticleForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
    
     
     
-    public AddPubForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+    public AddArticleForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
-        setTitle("");
+        setTitle("Ajout Artcile");
         setName("TrendingForm");
         String defstring ="";
         
@@ -72,14 +74,14 @@ public class AddPubForm extends BaseForm {
          Button btnimage = new Button("Image");
        Container C = new Container();
          TextField tnom = new TextField("","Titre");
-    TextField tdesc= new TextField("","Description");
+    TextField tdesc= new TextField("","Contenu");
     TextField ttags= new TextField("","Tags");
-    TextField tsite= new TextField("","Site");
+ //   TextField tsite= new TextField("","Site");
    
        C.add(tnom);
        C.add(tdesc);
        C.add(ttags);
-       C.add(tsite);
+     //  C.add(tsite);
        C.add(btnajout);
        C.add(btnimage);
        
@@ -124,7 +126,7 @@ public class AddPubForm extends BaseForm {
        
         
         btnajout.addActionListener(e->{
-              ServicePublicite ser = new ServicePublicite();
+              ServiceArticle ser = new ServiceArticle();
            UploadImage.imageupload(imagecode, tnom.getText());
            String desc= editor.getData();
         
@@ -134,11 +136,11 @@ public class AddPubForm extends BaseForm {
             desc=replaceAll(desc,"/", "%2F");
           //  desc=replaceAll(desc,"\\", "%5C");
            //String desc1=desc.replaceAll(">", "\\u003E");
-            publicite p=new publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),tdesc.getText(),ttags.getText());
+            Article p=new Article(tnom.getText(),tnom.getText()+".jpg",tdesc.getText(),ttags.getText());
             ser.ajoutTask(p);
-             ServicePublicite serviceTask=new ServicePublicite();
-            WalkthruPubForm.listTasks = serviceTask.getList2();
-            PubliciteForm pf = new PubliciteForm();
+             ServiceArticle serviceTask=new ServiceArticle();
+          //  WalkthruPubForm.listTasks = serviceTask.getList2();
+            ArticleForm pf = new ArticleForm();
             pf.show();
         });
       
@@ -151,7 +153,7 @@ public class AddPubForm extends BaseForm {
         
         installSidemenu(resourceObjectInstance);
         getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_KEYBOARD_BACKSPACE, e -> {
-             PubliciteForm h=new PubliciteForm();
+             ArticleForm h=new ArticleForm();
                                 h.show();
         });
         
@@ -190,8 +192,8 @@ public class AddPubForm extends BaseForm {
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
          ServicePublicite serviceTask=new ServicePublicite();
-         ArrayList<publicite> listTasks = serviceTask.getList2();
-        for(publicite pub:listTasks){
+         ArrayList<Publicite> listTasks = serviceTask.getList2();
+        for(Publicite pub:listTasks){
             
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();

@@ -5,23 +5,18 @@
  */
 package Services;
 
-import com.codename1.charts.ChartComponent;
-import com.codename1.charts.models.CategorySeries;
-import com.codename1.charts.renderers.DefaultRenderer;
-import com.codename1.charts.renderers.SimpleSeriesRenderer;
-import com.codename1.charts.util.ColorUtil;
-import com.codename1.charts.views.PieChart;
+import Entity.Article;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
-import com.codename1.ui.Form;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
-import com.codename1.ui.layouts.BorderLayout;
-import Entity.publicite;
+import com.codename1.uikit.pheonixui.SignInForm;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,10 +33,10 @@ public class ServiceArticle {
    public static ArrayList<String> titres=new ArrayList<String>();  
    public static ArrayList<Double> clicks=new ArrayList<Double>(); 
 
-    public void ajoutTask(publicite ta) {
+    public void ajoutTask(Article ta) {
         ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://192.168.1.4/planners/web/app_dev.php/pubjsonnew?text=" + ta.getTitre_pub()
-                + "&description=" + ta.getDesc_pub() +"&siteweb="+ta.getSite_pub()+"&tags="+ta.getTags()+"&image="+ta.getImg_pub();
+        String Url = "http://localhost/planners/web/app_dev.php/articlejsonnew?titre="+ta.getTitre_article()
+                +"&contenu="+ta.getContenu()+"&tags="+ta.getTags()+"&image="+ta.getImg_article()+"&idUser="+SignInForm.id;
         con.setUrl(Url);
 
         System.out.println("tt");
@@ -60,9 +55,9 @@ public class ServiceArticle {
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
 
-    public ArrayList<publicite> getListTask(String json) {
+    public ArrayList<Article> getListTask(String json) {
 
-        ArrayList<publicite> listEtudiants = new ArrayList<>();
+        ArrayList<Article> listEtudiants = new ArrayList<>();
 
         try {
             System.out.println(json);
@@ -75,25 +70,40 @@ public class ServiceArticle {
                 int i=0;
             for (Map<String, Object> obj : list) {
                 
-                publicite e = new publicite();
+                Article e = new Article();
 
                 // System.out.println(obj.get("id"));
                // float id = Float.parseFloat(obj.get("idPub").toString());
                // System.out.println(id);
               //  e.setId_pub(obj.get("idPub").toString());
                 //e.setId(Integer.parseInt(obj.get("id").toString().trim()));
-                
-                e.setImg_pub(obj.get("contenu").toString());
-                System.out.println(obj.get("contenu").toString());
+                 e.setId_article((obj.get("id").toString()));
+                e.setTitre_article(obj.get("titre").toString());
+                e.setContenu(obj.get("contenu").toString());
+                e.setTags(obj.get("tags").toString());
+                 e.setImg_article(obj.get("image").toString());
+               // e.setDate_article(obj.get("datecreation"));
+               // System.out.println(obj.get("contenu").toString());
               //  e.setTitre_pub(obj.get("text").toString());
               //  e.setSite_pub(obj.get("siteWeb").toString());
                // e.setDesc_pub(obj.get("description").toString());
                 //e.setNb_click();
-                
+                 Map<String, Object> date2  = (Map<String, Object>) obj.get("datecreation");
+                 float da = Float.parseFloat(date2.get("timestamp").toString());
+                 Date d = new Date((long)(da-3600 )*1000);
+                 /*SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+                                String dab = formater.format(d.getDate());*/
+                 e.setDate_article(d);
+                 
+                   String user_id ="";
+                user_id = obj.get("user").toString();
+                String id_user=user_id.substring(user_id.indexOf("id=")+3, user_id.indexOf("prenom")-2);
+               System.out.println("7achty   "+id_user);
+             e.setId_u(id_user);
                // clicks.add(Double.parseDouble(obj.get("nbClick").toString()));
              //  values1[i]=Double.parseDouble(obj.get("nbClick").toString());
               //  values2[i]=e.getTitre_pub();
-                titres.add(e.getTitre_pub());
+               // titres.add(e.getTitre_pub());
               
                i++;
                 System.out.println(e);
@@ -107,11 +117,11 @@ public class ServiceArticle {
         return listEtudiants;
 
     }
-   ArrayList<publicite> listTasks = new ArrayList<>();
+   ArrayList<Article> listTasks = new ArrayList<>();
     
-    public ArrayList<publicite> getList2(){       
+    public ArrayList<Article> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://192.168.1.4/planners/web/app_dev.php/articlejson");  
+        con.setUrl("http://"+ServicePublicite.serverAhmed+"/planners/web/app_dev.php/articlejson");  
         
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -127,77 +137,6 @@ public class ServiceArticle {
     
      
     
-    /*****************************************************************************/
-    
-    /**
- * Creates a renderer for the specified colors.
- */
-private DefaultRenderer buildCategoryRenderer(int[] colors) {
-    DefaultRenderer renderer = new DefaultRenderer();
-    renderer.setLabelsTextSize(15);
-    renderer.setLegendTextSize(15);
-    renderer.setMargins(new int[]{20, 30, 15, 0});
-    for (int color : colors) {
-        SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-        r.setColor(color);
-        renderer.addSeriesRenderer(r);
-    }
-    return renderer;
-}
 
-/**
- * Builds a category series using the provided values.
- *
-     * @param titres
-     * @param clicks
-     * @param values2
-     * @param values1
- * @param titles the series titles
- * @param values the values
- * @return the category series
- */
-protected CategorySeries buildCategoryDataset(ArrayList<String> titres, ArrayList<Double> clicks) {
-    CategorySeries series = new CategorySeries("Projet");
-    int i = 0;
-    
-    for (i=0;i<titres.size();i++) {
-        series.add(titres.get(i), clicks.get(i));
-        
-    }
-
-    return series;
-}
-
-public Form createPieChartForm() {
-    // Generate the values
-    double[] values = new double[]{12, 14, 11, 10, 19};
-
-    // Set up the renderer
-    int[] colors = new int[]{ColorUtil.BLUE, ColorUtil.GREEN, ColorUtil.MAGENTA, ColorUtil.YELLOW, ColorUtil.CYAN};
-    DefaultRenderer renderer = buildCategoryRenderer(colors);
-    renderer.setZoomButtonsVisible(true);
-    renderer.setZoomEnabled(true);
-    renderer.setChartTitleTextSize(20);
-    renderer.setDisplayValues(true);
-    renderer.setShowLabels(true);
-    SimpleSeriesRenderer r = renderer.getSeriesRendererAt(0);
-    r.setGradientEnabled(true);
-    r.setGradientStart(0, ColorUtil.BLUE);
-    r.setGradientStop(0, ColorUtil.GREEN);
-    r.setHighlighted(true);
-    
-
-    // Create the chart ... pass the values and renderer to the chart object.
-    PieChart chart = new PieChart(buildCategoryDataset(titres, clicks), renderer);
-
-    // Wrap the chart in a Component so we can add it to a form
-    ChartComponent c = new ChartComponent(chart);
-
-    // Create a form and show it.
-    Form f = new Form("Budget", new BorderLayout());
-    f.add(BorderLayout.CENTER, c);
-    return f;
-
-}
 
 }
