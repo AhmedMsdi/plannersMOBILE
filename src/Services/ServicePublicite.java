@@ -36,7 +36,7 @@ import java.util.Map;
 public class ServicePublicite {
 
         
-    public static String serverAhmed ="192.168.1.6";
+    public static String serverAhmed ="localhost";
     public static double[] values1 = new double[2];
     public static String[] values2 = new String[2];
    public static ArrayList<String> titres=new ArrayList<String>();  
