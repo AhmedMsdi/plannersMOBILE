@@ -13,9 +13,14 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Container;
+import com.codename1.ui.Image;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.util.ImageIO;
+import com.codename1.util.Base64;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,14 +34,15 @@ public class ServiceEvent {
     Container cnt = new Container(new BoxLayout(BoxLayout.Y_AXIS));
     public void ajouterEvent(Evenement f){
         ConnectionRequest con = new ConnectionRequest();
+        
         String Url = "http://localhost/planners/web/app_dev.php/newTask?titre="+f.getTitre()+"&adresse="
-                +f.getAdresse()+"&ville="+f.getVille()+"&description="+f.getDescription()+"&image=ttt" //+f.getImage()
-                +"&date_event="+f.getDate_event()+"&time_event=00:00:00"
+                +f.getAdresse()+"&ville="+f.getVille()+"&description="+f.getDescription()+"&image="+f.getImage()
+                +"&date_event="+f.getEvent_date_string()+"&time_event="+f.getEvent_time_string()
                 +"&prix="+f.getPrix()+"&contact="+f.getTel()+"&CatEvent="+f.getId_cat()
                 +"&User="+f.getId_user()+"&etat="+f.getEtat();
         con.setUrl(Url);
 
-        //System.out.println("tt");
+        System.out.println(Url);
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
@@ -52,40 +58,47 @@ public class ServiceEvent {
             //System.out.println(json);
             JSONParser j = new JSONParser();
             Map<String, Object> etudiants = j.parseJSON(new CharArrayReader(json.toCharArray()));
-            System.out.println("ttt   "+etudiants);
+           // System.out.println("ttt   "+etudiants);
             List<Map<String, Object>> list = (List<Map<String, Object>>) etudiants.get("root");
             for (Map<String, Object> obj : list) {
                 Evenement e = new Evenement();
-               float id = Float.parseFloat(obj.get("id").toString());
-               float prix = Float.parseFloat(obj.get("prix").toString());
-               float tel = Float.parseFloat(obj.get("contact").toString());
-               Map<String,Object> dates=(Map<String, Object>)obj.get("dateEvent");
-               float date = Float.parseFloat(dates.get("timestamp").toString());
+                float id = Float.parseFloat(obj.get("id").toString());
+                float prix = Float.parseFloat(obj.get("prix").toString());
+                float tel = Float.parseFloat(obj.get("contact").toString());
                
-               Map<String,Object> times = (Map<String, Object>)obj.get("timeEvent");
-               if (times != null){
-               float time = Float.parseFloat(times.get("timestamp").toString());
-               //System.out.println(date+"   -----   "+time);
-               float mix = date+time;
-               }
+                Map<String,Object> dates=(Map<String, Object>)obj.get("dateEvent");
+                float date = Float.parseFloat(dates.get("timestamp").toString());
+                float time = 0;
+                Map<String,Object> times = (Map<String, Object>)obj.get("timeEvent");
+                if (times != null){
+                    time = Float.parseFloat(times.get("timestamp").toString());
+                   // System.out.println(date+"   -----   "+time);
+                }
                
-               Date datepub = new Date((long)(date-3600)*1000);
-               SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-            String dd = formater.format(datepub);
-               // System.out.println(datepub);
-               e.setId_event((int) id);
-              e.setTitre(obj.get("titre").toString());
-              e.setAdresse(obj.get("adresse").toString());
-              e.setDescription(obj.get("description").toString());
-              e.setVille(obj.get("ville").toString());
-              e.setPrix((int) prix);
-              e.setTel((int) tel);
-              e.setDate_event(dd);
-              e.setImage(obj.get("image").toString());
+                Date datepub = new Date((long)(date-3600)*1000);
+                Date timeevent = new Date((long)(time-3600)*1000);
+                //System.out.println("timeevent "+timeevent);
+               
+                SimpleDateFormat formater = new SimpleDateFormat("HH:mm");
+                String tt = formater.format(timeevent);
+               
+                //System.out.println(tt);
+                e.setId_event((int) id);
+                e.setTitre(obj.get("titre").toString());
+                e.setAdresse(obj.get("adresse").toString());
+                e.setDescription(obj.get("description").toString());
+                e.setVille(obj.get("ville").toString());
+                e.setPrix((int) prix);
+                e.setTel((int) tel);
+                e.setDate_event(datepub);
+                e.setEvent_time_string(tt);
+                e.setImage(obj.get("image").toString());
+                
+                
                 listEvennements.add(e);
             }
         } catch (IOException ex) {
-            }
+        }
         return listEvennements;
     }
     
@@ -112,17 +125,23 @@ public class ServiceEvent {
                Map<String,Object> dates=(Map<String, Object>)obj.get("dateEvent");
                float date = Float.parseFloat(dates.get("timestamp").toString());
                 
+               float time = 0;
                Map<String,Object> times = (Map<String, Object>)obj.get("timeEvent");
                if (times != null){
-               float time = Float.parseFloat(times.get("timestamp").toString());
+                    time = Float.parseFloat(times.get("timestamp").toString());
                //System.out.println(date+"   -----   "+time);
-               float mix = date+time;
+               
                }
+               Map<String,Object> cat = (Map<String, Object>)obj.get("CatEvent");
+               float idcat = Float.parseFloat(cat.get("id").toString());
                
                Date datepub = new Date((long)(date-3600)*1000);
-               SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-            String dd = formater.format(datepub);
-               // System.out.println(datepub);
+               Date timeevent = new Date((long)(time-3600)*1000);
+                //System.out.println("timeevent "+timeevent);
+               
+               SimpleDateFormat formater = new SimpleDateFormat("HH:mm");
+                String tt = formater.format(timeevent);
+                String tt2 =""+(int) time;
                e.setId_event((int) id);
               e.setTitre(obj.get("titre").toString());
               e.setAdresse(obj.get("adresse").toString());
@@ -130,10 +149,13 @@ public class ServiceEvent {
               e.setVille(obj.get("ville").toString());
               e.setPrix((int) prix);
               e.setTel((int) tel);
-              e.setDate_event(dd);
+              e.setDate_event(datepub);
               e.setImage(obj.get("image").toString());
               e.setId_user((int) idUser);
                 e.setEtat((int) etat);
+                e.setEvent_time_string(tt2);
+                e.setTime_event(timeevent);
+                e.setId_cat((int) idcat);
                 list1Event.add(e);
             }          
         } catch (IOException ex) {
@@ -219,18 +241,21 @@ public class ServiceEvent {
         ConnectionRequest con = new ConnectionRequest();
         String Url = "http://localhost/planners/web/app_dev.php/"+f.getId_event()+"/updateTask?titre="
                 +f.getTitre()+"&adresse="+f.getAdresse()+"&ville="+f.getVille()+"&description="+f.getDescription()
-                +"&image=ttt" //+f.getImage()
-                +"&date_event="+f.getDate_event()+"&time_event=00:00:00"
-                +"&prix="+f.getPrix()+"&contact="+f.getTel()+"&CatEvent=2" ;//+f.getId_cat();
+                +"&image="+f.getImage()
+                +"&date_event="+f.getEvent_date_string()+"&time_event="+f.getEvent_time_string()
+                +"&prix="+f.getPrix()+"&contact="+f.getTel()+"&CatEvent="+f.getId_cat();
         con.setUrl(Url);
         
-        System.out.println("tt");
+        System.out.println(Url);
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
+           // System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
         
     }
+   
+    
+    
 }

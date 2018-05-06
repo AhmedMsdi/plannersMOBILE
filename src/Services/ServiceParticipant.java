@@ -31,7 +31,7 @@ public class ServiceParticipant {
         
         con.addResponseListener((e) -> {
             nbr_participant = new String(con.getResponseData());
-            System.out.println(nbr_participant);
+            //System.out.println(nbr_participant);
         });
 
         NetworkManager.getInstance().addToQueueAndWait(con);
@@ -45,7 +45,7 @@ public class ServiceParticipant {
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
+            //System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
     }

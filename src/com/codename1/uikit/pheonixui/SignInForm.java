@@ -18,11 +18,10 @@
  */
 package com.codename1.uikit.pheonixui;
 
-import Entity.Plan;
 import Entity.User;
-import GUI.AccueilForm;
 import GUI.Article.PubliciteForm;
-import Services.ServicePlans;
+import GUI.Article.VoidForm;
+import Services.ServicePublicite;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -30,7 +29,6 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.util.StringUtil;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +46,7 @@ public class SignInForm extends com.codename1.ui.Form {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
     public static int id_u;
+    public static int points_fid;
 
     public SignInForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
@@ -72,7 +71,9 @@ public class SignInForm extends com.codename1.ui.Form {
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void guiBuilderBindComponentListeners() {
         EventCallbackClass callback = new EventCallbackClass();
+        EventCallbackClass callback2 = new EventCallbackClass();
         gui_Button_2.addActionListener(callback);
+        gui_Button_1.addActionListener(callback2);
     }
 
     class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
@@ -94,6 +95,11 @@ public class SignInForm extends com.codename1.ui.Form {
 
             if (sourceComponent == gui_Button_2) {
                 onButton_2ActionEvent(ev);
+            }
+            else if (sourceComponent == gui_Button_1) {
+                onButton_3ActionEvent(ev);
+              
+               
             }
         }
 
@@ -132,11 +138,17 @@ public class SignInForm extends com.codename1.ui.Form {
         addComponent(com.codename1.ui.layouts.BorderLayout.SOUTH, gui_Button_1);
         gui_Container_1.setScrollableY(true);
         gui_Container_1.setName("Container_1");
-        gui_Button_1.setText("Create New Account");
+        gui_Button_1.setText("Créer un compte");
         gui_Button_1.setUIID("CenterLabel");
         gui_Button_1.setName("Button_1");
+   
     }// </editor-fold>
 
+    
+     public void onButton_3ActionEvent(com.codename1.ui.events.ActionEvent ev) {
+        // System.out.println("wseeeeeeeeeeeeeeeeel :D !!!!");
+          new InscritForm().show();
+     }
 //-- DON'T EDIT ABOVE THIS LINE!!!
     public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
         //new InboxForm().show();
@@ -144,7 +156,7 @@ public class SignInForm extends com.codename1.ui.Form {
         String name = gui_Text_Field_2.getText();
         String pswd = gui_Text_Field_1.getText();
         if (name.trim() != "" && pswd.trim() != "") {
-            con.setUrl("http://localhost/planners/web/app_dev.php/FindLoginID/" + name + "/" + pswd);
+            con.setUrl("http://"+ServicePublicite.serverAhmed+"/planners/web/app_dev.php/FindLoginID/" + name + "/" + pswd);
 
             con.addResponseListener((NetworkEvent evt) -> {
                 ArrayList<User> listuser = (ArrayList<User>) getListUser(new String(con.getResponseData()));
@@ -152,21 +164,25 @@ public class SignInForm extends com.codename1.ui.Form {
                     for (User e : listuser) {
 
                         id_u = e.getId_u();
+                        points_fid=e.getPoint_fidelite();
                         /*  Curentuser c =new Curentuser();
                     c.setCurrent(users.get("username").toString());
                     c.setCurrentId(Integer.parseInt(users.get("id").toString()));
                          */
                 String pwd = StringUtil.replaceAll(e.getPassword(), "$2y", "$2a"); 
             
-                 if (BCrypt.checkpw(pswd, pwd) == true) {
+                if (BCrypt.checkpw(pswd, pwd) == true) {
+            
                        /* AccueilForm AccueilF = new AccueilForm();
                         AccueilF.show();*/
-                       PubliciteForm AccueilF = new PubliciteForm();
+                             PubliciteForm AccueilF = new PubliciteForm();
                         AccueilF.show();
-                 }else {
+                 }
+                else {
                     Dialog.show("Erreur d'authentification", "Verifier votre mot de passe!!", "OK", "Annuler");
 
                 }
+      
                     }
                 } else {
                     Dialog.show("Erreur d'authentification", "Verifier votre Nom d'utilisateur ou mot de passe!!", "OK", "Annuler");

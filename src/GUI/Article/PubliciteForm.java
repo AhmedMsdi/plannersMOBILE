@@ -27,6 +27,7 @@ import com.codename1.uikit.pheonixui.*;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkManager;
+import com.codename1.testing.TestUtils;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
@@ -62,6 +63,10 @@ public class PubliciteForm extends BaseForm {
         setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
         setTitle("Publicités");
         setName("TrendingForm");
+        
+        /*****/
+        
+        /*****/
         
     
         initGuiBuilderComponents(resourceObjectInstance);
@@ -148,18 +153,36 @@ public class PubliciteForm extends BaseForm {
              String text = (String)e.getSource();
              if(text != null && text.length() != 0) {
                  
-           
             getToolbar().getParent().removeAll();
+            getToolbar().getParent().animateLayout(150);
             try{
-            getToolbar().getParent().animateLayout(300);
+            
+                TestUtils.waitFor(1000);
+               
             }catch(NullPointerException ex){
                 System.out.println("null");
             }
             //showDishesContainer();
             
              System.out.println(text);
-             initGuiBuilderComponentsR(resourceObjectInstance,text);
+              initGuiBuilderComponentsR(resourceObjectInstance,text);
+              getToolbar().getParent().animateLayout(150);
 
+             }
+             else {
+                  getToolbar().getParent().removeAll();
+            getToolbar().getParent().animateLayout(150);
+            try{
+            
+                TestUtils.waitFor(1000);
+               
+            }catch(NullPointerException ex){
+                System.out.println("null");
+            }
+            //showDishesContainer();
+             text = text.toLowerCase();
+             System.out.println(text);
+              initGuiBuilderComponentsR(resourceObjectInstance,text);
              }
             
 }, 4);
@@ -345,10 +368,11 @@ public class PubliciteForm extends BaseForm {
 
     
         private void initGuiBuilderComponentsR(com.codename1.ui.util.Resources resourceObjectInstance,String text) {
-    /*     ServicePublicite serviceTask=new ServicePublicite();
+         ServicePublicite serviceTask=new ServicePublicite();
        //  ArrayList<publicite> listTasks = serviceTask.getList2();
         for(Publicite pub:WalkthruPubForm.listTasks){
-            if(pub.getTitre_pub().contains(text)){
+           // if(pub.getTitre_pub().contains(text)){
+           if(pub.getTitre_pub().toLowerCase().indexOf(text)!=-1){
                 com.codename1.ui.Container gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
      com.codename1.components.MultiButton gui_Multi_Button_1 = new com.codename1.components.MultiButton();
      com.codename1.components.MultiButton gui_LA = new com.codename1.components.MultiButton();
@@ -433,7 +457,7 @@ public class PubliciteForm extends BaseForm {
         gui_Label_1_1_1.setUIID("Separator");
         gui_Label_1_1_1.setName("Label_1_1_1");
         
-       
+       /*
           Button bb = new Button();
                         gui_imageContainer1.setLeadComponent(bb);
 
@@ -466,7 +490,7 @@ public class PubliciteForm extends BaseForm {
                               gui_Multi_Button_1.setPropertyValue("line1", pub.getTitre_pub());
                                a.add(gui_Container_1);
                             a.add(gui_imageContainer1);
-                          if (Integer.parseInt(pub.getId_u())==SignInForm.id){
+                          if (Integer.parseInt(pub.getId_u())==SignInForm.id_u){
                              // System.out.println("ahmeeeeeeeeeeeeeed "+ Integer.parseInt(pub.getId_u()));
                                            Button b = new Button("Supprimer");
                                           
@@ -492,8 +516,10 @@ public class PubliciteForm extends BaseForm {
                             
                         }
                    });
+                   
+                   */
           }
-        }*/
+        }
     }// </editor-fold>
 
 //-- DON'T EDIT ABOVE THIS LINE!!!

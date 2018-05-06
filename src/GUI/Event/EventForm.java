@@ -50,7 +50,6 @@ public class EventForm extends BaseForm {
         ServiceEvent event = new ServiceEvent();
         for (Iterator<Evenement> iterator = event.getList2().iterator(); iterator.hasNext();) {
             Evenement prodnext = iterator.next();
-            //initGuiBuilderComponents(resourceObjectInstance);
             blockEvent(resourceObjectInstance, prodnext);
         }
         
@@ -86,16 +85,16 @@ public class EventForm extends BaseForm {
         gui_Multi_Button_1.setName("Multi_Button_1");
         gui_Multi_Button_1.setPropertyValue("line1", p.getTitre());
         gui_Multi_Button_1.setPropertyValue("line2", "");
-        gui_Multi_Button_1.setPropertyValue("uiid1", "Label");
+        gui_Multi_Button_1.setPropertyValue("uiid1", "RedLabel");
         gui_Multi_Button_1.setPropertyValue("uiid2", "RedLabel");
         gui_LA.setUIID("Label");
         gui_LA.setName("LA");
-        /*
+        
         SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
         String dd = formater.format(p.getDate_event());
-*/
+
         //System.out.println(p.getDate_event());
-        gui_LA.setPropertyValue("line1", "Le "+p.getDate_event());
+        gui_LA.setPropertyValue("line1", "Le "+dd +" "+p.getEvent_time_string());
         gui_LA.setPropertyValue("line2", "à "+p.getVille());
         gui_LA.setPropertyValue("uiid1", "SlightlySmallerFontLabel");
         gui_LA.setPropertyValue("uiid2", "RedLabelRight");

@@ -11,6 +11,7 @@ import com.codename1.components.FloatingActionButton;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.components.ScaleImageLabel;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
@@ -92,12 +93,12 @@ public class MyEventForm extends Form {
         gui_Multi_Button_1.setPropertyValue("uiid2", "RedLabel");
         gui_LA.setUIID("Label");
         gui_LA.setName("LA");
-        /*
+        
         SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
         String dd = formater.format(p.getDate_event());
-*/
+
         //System.out.println(p.getDate_event());
-        gui_LA.setPropertyValue("line1", "Le "+p.getDate_event());
+        gui_LA.setPropertyValue("line1", "Le "+dd+" "+p.getEvent_time_string());
         gui_LA.setPropertyValue("line2", "à "+p.getVille());
         gui_LA.setPropertyValue("uiid1", "SlightlySmallerFontLabel");
         gui_LA.setPropertyValue("uiid2", "RedLabelRight");

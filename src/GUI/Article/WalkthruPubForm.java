@@ -133,17 +133,24 @@ public class WalkthruPubForm extends com.codename1.ui.Form {
           static String titre3="";
      static String desc3="";
      static String site3="";
-     
+     int r,r1,r2;
     public WalkthruPubForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
         
               ServicePublicite serviceTask=new ServicePublicite();
         listTasks = serviceTask.getList2();
-         int r =new Random().nextInt(listTasks.size());
-         int r1 =new Random().nextInt(listTasks.size());
-         int r2 =new Random().nextInt(listTasks.size());
-         
+         r =new Random().nextInt(listTasks.size());
+        
+         r1 =new Random().nextInt(listTasks.size());
+         while(r1==r){
+            r1 =new Random().nextInt(listTasks.size());
+         }
+          r2 =new Random().nextInt(listTasks.size());
+          while(r2==r || r2==r1){
+            r1 =new Random().nextInt(listTasks.size());
+         }
+          
          titre1=listTasks.get(r).getTitre_pub();
          desc1=listTasks.get(r).getDesc_pub();
         site1=listTasks.get(r).getSite_pub();

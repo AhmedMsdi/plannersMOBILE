@@ -16,8 +16,10 @@ public class Evenement {
     private String ville;
     private String description;
     private String image;
-    private String date_event;
-    private String time_event;
+    private Date date_event;
+    private String event_date_string;
+    private Date time_event;
+    private String event_time_string;
 //    private TimeZone time_event;
     private int prix;
     private int tel;
@@ -28,7 +30,7 @@ public class Evenement {
     public Evenement() {
     }
     
-    public Evenement(int id_event, String titre, String adresse,String ville, String description, String image, String date_event, String time_event, int prix, int tel, int id_user, int id_cat, int etat){//,Time time_event) {
+    public Evenement(int id_event, String titre, String adresse,String ville, String description, String image, Date date_event, Date time_event, int prix, int tel, int id_user, int id_cat, int etat){//,Time time_event) {
         this.id_event = id_event;
         this.titre = titre;
         this.adresse = adresse;
@@ -44,7 +46,7 @@ public class Evenement {
         this.etat=etat;
     }
 
-    public Evenement(String titre, String address,String ville, int prix, String description,int tel, String date_event, int idcat, int id_user, int etat) {
+    public Evenement(String titre, String address,String ville, int prix, String description,int tel, Date date_event, int idcat, int id_user, int etat) {
         this.titre=titre;
         this.adresse=address;
         this.ville = ville;
@@ -56,9 +58,43 @@ public class Evenement {
         this.id_cat=idcat;
         this.id_user = id_user;
         this.etat=etat;
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Evenement(int id,int etat, String titre, String address,String ville, int prix, String description,int tel, String img, String event_date_string, String event_time_string, int idcat, int id_user) {
+        this.id_event = id;
+        this.titre=titre;
+        this.adresse=address;
+        this.ville = ville;
+        this.prix = prix;
+        this.description = description;
+        this.event_date_string = event_date_string;
+        this.event_time_string = event_time_string;
+        this.tel= tel;
+        this.image = img;
+        this.id_cat=idcat;
+        this.id_user = id_user;
+        this.etat=etat;
+    }
+
+    public String getEvent_date_string() {
+        return event_date_string;
+    }
+
+    public void setEvent_date_string(String event_date_string) {
+        this.event_date_string = event_date_string;
+    }
+
+    public String getEvent_time_string() {
+        return event_time_string;
+    }
+
+    public void setEvent_time_string(String event_time_string) {
+        this.event_time_string = event_time_string;
+    }
+    
+    
+    
+    
 
     public String getVille() {
         return ville;
@@ -104,11 +140,11 @@ public class Evenement {
         this.image = image;
     }
 
-    public String getDate_event() {
+    public Date getDate_event() {
         return date_event;
     }
 
-    public void setDate_event(String date_event) {
+    public void setDate_event(Date date_event) {
         this.date_event = date_event;
     }
 
@@ -149,11 +185,11 @@ public class Evenement {
     }
 
     
-    public String getTime_event() {
+    public Date getTime_event() {
         return time_event;
     }
 
-    public void setTime_event(String time_event) {
+    public void setTime_event(Date time_event) {
         this.time_event = time_event;
     }
 

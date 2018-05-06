@@ -22,7 +22,7 @@ import Entity.Article;
 import Entity.Publicite;
 import Services.ServiceArticle;
 import Services.ServicePublicite;
-import ca.weblite.codename1.components.ckeditor.CKeditor;
+//import ca.weblite.codename1.components.ckeditor.CKeditor;
 import com.codename1.components.ImageViewer;
 import com.codename1.uikit.pheonixui.*;
 import com.codename1.components.ScaleImageLabel;
@@ -85,10 +85,10 @@ public class AddArticleForm extends BaseForm {
        C.add(btnajout);
        C.add(btnimage);
        
-        CKeditor editor = new CKeditor();
+       /* CKeditor editor = new CKeditor();
     editor.initLater();
     
- C.add(editor);
+ C.add(editor);*/
        
          btnimage.addActionListener(new ActionListener() {
             @Override
@@ -128,12 +128,12 @@ public class AddArticleForm extends BaseForm {
         btnajout.addActionListener(e->{
               ServiceArticle ser = new ServiceArticle();
            UploadImage.imageupload(imagecode, tnom.getText());
-           String desc= editor.getData();
+          /* String desc= editor.getData();
         
                  //imagecode = Base64.encode(desc);
            desc=replaceAll(desc,"<", "%3C");
             desc=replaceAll(desc,">", "%3E");
-            desc=replaceAll(desc,"/", "%2F");
+            desc=replaceAll(desc,"/", "%2F");*/
           //  desc=replaceAll(desc,"\\", "%5C");
            //String desc1=desc.replaceAll(">", "\\u003E");
             Article p=new Article(tnom.getText(),tnom.getText()+".jpg",tdesc.getText(),ttags.getText());

@@ -77,11 +77,7 @@ public class DetailEventForm extends Form {
         Container gui_imageContainer1 = new Container(new BorderLayout());
         Container gui_Container_2 = new Container(new BorderLayout());
         TextArea gui_Text_Area_1 = new TextArea();
-        Button gui_detail_event = new Button();
         Container gui_imageContainer2 = new Container(new BorderLayout());
-        Label gui_Label_1_1_1 = new Label();
-        Label gui_separator1 = new Label();
-        MultiButton gui_newYork = new MultiButton();
         Container gui_group_button = new Container(new BorderLayout());
         Button btn_Modif = new Button();
         Button btn_delete = new Button();
@@ -107,13 +103,18 @@ public class DetailEventForm extends Form {
         block_info.add(label_tel);
         
         label_adr.setText("Adresse : "+p.getAdresse() +" " +p.getVille());
-        label_prix.setText("Prix : "+p.getPrix());
+        label_adr.getAllStyles().setFgColor(0xFF8000);
+        label_prix.setText("Prix : "+p.getPrix() +" DT");
         label_tel.setText("Numero : "+p.getTel());
-        /*
+        
+        
         SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
         String dd = formater.format(p.getDate_event());
-        */
-        gui_LA.setPropertyValue("line1", "Le "+p.getDate_event());
+        
+        SimpleDateFormat formater_time = new SimpleDateFormat("HH:mm");
+        String tt = formater_time.format(p.getTime_event());
+        
+        gui_LA.setPropertyValue("line1", "Le "+dd +" "+tt);
         gui_LA.setPropertyValue("line2", "à "+p.getVille());
         gui_LA.setPropertyValue("uiid1", "SlightlySmallerFontLabel");
         gui_LA.setPropertyValue("uiid2", "RedLabelRight");
@@ -125,6 +126,7 @@ public class DetailEventForm extends Form {
         ServiceParticipant sp = new ServiceParticipant();
         String nbr_part = sp.nombreParticipant(id_event);
         label_nbr_particip.setText("Nbr de participants : "+nbr_part);
+        label_nbr_particip.getAllStyles().setFgColor(0xFF8000);
         btn_participe.setText("Participer");
         btn_participe.setUIID("CenterLabelSmall");
         btn_participe.setName("btn_participe");
@@ -180,11 +182,12 @@ public class DetailEventForm extends Form {
                 }
         });
         btn_facebook.addActionListener((e) -> {
-          String accessToken = "EAACEdEose0cBALIuSFYIMT3kwHtt4k8Mmu5gBrjToPkH4CPeXLxrDi9F5cHfRtuJjAAwagsdiKh5DuCwngLyqrrarH2HivmbNb8PGmJ95ASpZBCpsCGipPguu9rb0KAs1bmqlrw9FCkIrmHdgxAKBKXg5G4kNMPt3ZCIl9xXUHQN5awuNUeqteYJIGQmx3SmHMS9eBOwwjShEguZB1c";
+          String accessToken = "EAACEdEose0cBAGtKSXLHROnO1WWITsTZB0bCsO0lWcj17vo4tTW5LS8bBByWalvIzYfZAfQZAhSrFcXToqlAXtqhnxsX8iF7CPlZCyRZB97sdm1K4ZBCcOebZBMH5vam6xcEmpZCCjsfwcPIMUW4URJ07koV17VhxZCwhV7zyBRv1D1bgRChqrq2C9PUbVuobZB7lXQ1IZB748zw90tyJZBATfGe";
                
-               FacebookClient fbClient= new DefaultFacebookClient(accessToken,Version.VERSION_2_0);             
+                FacebookClient fbClient= new DefaultFacebookClient(accessToken,Version.VERSION_2_0); 
+                String message = ""+p.getTitre()+"   à:  "+p.getAdresse();
                  FacebookType response = fbClient.publish("me/feed", FacebookType.class,
-                Parameter.with("message",p.getTitre()));
+                         Parameter.with("message",message)  );
                 System.out.println("fb.com/"+response.getId());
                 Dialog.show("Succes", "Votre Article à été partagé sur facebook", "Fermer", null);
         });

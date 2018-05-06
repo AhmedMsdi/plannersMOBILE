@@ -45,11 +45,11 @@ public class SplashForm extends com.codename1.ui.Form {
         initGuiBuilderComponents(resourceObjectInstance);
         getTitleArea().setUIID("Container");
         int size = Display.getInstance().convertToPixels(0.5f);
-        Image progress = Effects.dropshadow(resourceObjectInstance.getImage("progress.png"), 10, 70, size, size);
+        Image progress = Effects.dropshadow(resourceObjectInstance.getImage("bonsplansLOGO.png"), 10, 70, size, size);
         gui_Infinite_Progress_1.setAnimation(progress);
         gui_Infinite_Progress_1.setAngleIncrease(1);
         Image logoImage = Effects.dropshadow(resourceObjectInstance.getImage("logo.png"), 10, 70, size, size);
-        gui_Label_1.setIcon(logoImage);
+       // gui_Label_1.setIcon(logoImage);
         UITimer.timer(300, false, this, () -> new WalkthruPubForm(resourceObjectInstance).show());
     }
 
@@ -78,7 +78,7 @@ public class SplashForm extends com.codename1.ui.Form {
         gui_Container_2.setName("Container_2");
         ((com.codename1.ui.layouts.FlowLayout)gui_Container_2.getLayout()).setAlign(com.codename1.ui.Component.CENTER);
         gui_Label_1.setName("Label_1");
-        gui_Label_1.setIcon(resourceObjectInstance.getImage("logo.png"));
+       // gui_Label_1.setIcon(resourceObjectInstance.getImage("logo.png"));
         gui_Container_1.setName("Container_1");
     }// </editor-fold>
 

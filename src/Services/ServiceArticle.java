@@ -35,7 +35,7 @@ public class ServiceArticle {
 
     public void ajoutTask(Article ta) {
         ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://localhost/planners/web/app_dev.php/articlejsonnew?titre="+ta.getTitre_article()
+        String Url = "http://"+ServicePublicite.serverAhmed+"/planners/web/app_dev.php/articlejsonnew?titre="+ta.getTitre_article()
                 +"&contenu="+ta.getContenu()+"&tags="+ta.getTags()+"&image="+ta.getImg_article()+"&idUser="+SignInForm.id_u;
         con.setUrl(Url);
 

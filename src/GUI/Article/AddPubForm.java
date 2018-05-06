@@ -20,7 +20,7 @@ package GUI.Article;
 
 import Entity.Publicite;
 import Services.ServicePublicite;
-import ca.weblite.codename1.components.ckeditor.CKeditor;
+//import ca.weblite.codename1.components.ckeditor.CKeditor;
 import com.codename1.components.ImageViewer;
 import com.codename1.uikit.pheonixui.*;
 import com.codename1.components.ScaleImageLabel;
@@ -31,6 +31,7 @@ import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Image;
+import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
@@ -55,7 +56,7 @@ public class AddPubForm extends BaseForm {
   
       Image img;
        String imagecode="";
-
+      
     public AddPubForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
@@ -75,7 +76,7 @@ public class AddPubForm extends BaseForm {
     TextField tdesc= new TextField("","Description");
     TextField ttags= new TextField("","Tags");
     TextField tsite= new TextField("","Site");
-   
+    C.add(new Label(SignInForm.points_fid+" points de fidelité restants"));
        C.add(tnom);
        C.add(tdesc);
        C.add(ttags);
@@ -83,10 +84,15 @@ public class AddPubForm extends BaseForm {
        C.add(btnajout);
        C.add(btnimage);
        
-        CKeditor editor = new CKeditor();
+ 
+   
+     
+       // System.out.println("chaaaaaaaaaaaayma "+""+SignInForm.points_fid);
+       
+    /*    CKeditor editor = new CKeditor();
     editor.initLater();
     
- C.add(editor);
+ C.add(editor);*/
        
          btnimage.addActionListener(new ActionListener() {
             @Override
@@ -126,12 +132,12 @@ public class AddPubForm extends BaseForm {
         btnajout.addActionListener(e->{
               ServicePublicite ser = new ServicePublicite();
            UploadImage.imageupload(imagecode, tnom.getText());
-           String desc= editor.getData();
+         /*  String desc= editor.getData();
         
                  //imagecode = Base64.encode(desc);
            desc=replaceAll(desc,"<", "%3C");
             desc=replaceAll(desc,">", "%3E");
-            desc=replaceAll(desc,"/", "%2F");
+            desc=replaceAll(desc,"/", "%2F");*/
           //  desc=replaceAll(desc,"\\", "%5C");
            //String desc1=desc.replaceAll(">", "\\u003E");
             Publicite p=new Publicite(tnom.getText(),tnom.getText()+".jpg",tsite.getText(),tdesc.getText(),ttags.getText());

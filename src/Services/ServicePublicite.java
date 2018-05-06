@@ -36,7 +36,7 @@ import java.util.Map;
 public class ServicePublicite {
 
         
-    public static String serverAhmed ="localhost";
+    public static String serverAhmed ="192.168.1.6";
     public static double[] values1 = new double[2];
     public static String[] values2 = new String[2];
    public static ArrayList<String> titres=new ArrayList<String>();  
@@ -155,8 +155,8 @@ public class ServicePublicite {
  */
 private DefaultRenderer buildCategoryRenderer(int[] colors) {
     DefaultRenderer renderer = new DefaultRenderer();
-    renderer.setLabelsTextSize(15);
-    renderer.setLegendTextSize(15);
+    renderer.setLabelsTextSize(30);
+    renderer.setLegendTextSize(30);
     renderer.setMargins(new int[]{20, 30, 15, 0});
     for (int color : colors) {
         SimpleSeriesRenderer r = new SimpleSeriesRenderer();
