@@ -177,4 +177,5 @@ public class EventForm extends BaseForm {
     protected boolean isCurrentTrending() {
         return true;
     }
+    //ahmed was here
 }
