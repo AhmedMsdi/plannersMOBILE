@@ -27,7 +27,7 @@ public class ServiceHebergement {
         ConnectionRequest con = new ConnectionRequest();
      String Url =  "http://localhost/planners/web/app_dev.php/hebergement/newM?titre="+hb.getTitre()+"&categorie="+hb.getCategorie()+"&photo="+hb.getPhoto()
              + "&prix="+hb.getPrix()+"&description="+hb.getDescription()+"&tel="+hb.getTel()+"&lieu="+hb.getLieu()
-             +"&siteWeb="+hb.getSite_web()+"&idUser="+SignInForm.id;
+             +"&siteWeb="+hb.getSite_web()+"&idUser="+SignInForm.id_u;
         con.setUrl(Url);
 
         System.out.println("tt");

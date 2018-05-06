@@ -37,6 +37,7 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
@@ -110,28 +111,31 @@ public class PlanFormBienEtre extends BaseForm {
                         FontImage.setMaterialIcon(gui_LA, FontImage.MATERIAL_LOCATION_ON);
                         gui_LA.setIconPosition(BorderLayout.EAST);
 
-                        
-                        
-                       /*    gui_LA.addActionListener(new ActionListener() {
+                        gui_LA.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent evt) {
-                                 MapsForm pf = new MapsForm();
-                                 pf.idplan=e.getId_p();
-                                 pf.longitude=e.getLongitude();
-                                     pf.latitude=e.getLatitude();
-                                    pf.getF().show();
-                                
+                                try {
+                                    MapsForm.idplan = e.getId_p();
+                                MapsForm.longitude = e.getLongitude();
+                                MapsForm.latitude = e.getLatitude();  
+                                MapsForm.libmarker=e.getLibelle() ;
+                                MapsForm pf = new MapsForm(); 
+                                pf.getF().show();
+                                  
+                                } catch (Exception e) {
+                                 //     Dialog.show("GPS disabled", "AppName needs access to GPS. Please enable GPS", "Ok", null);
+                                }
+
                             }
-                        
-                        
-                        });*/
-                        
+
+                        });
+
                         gui_Text_Area_1.setRows(2);
                         gui_Text_Area_1.setColumns(100);
                         gui_Text_Area_1.setGrowByContent(false);
                         gui_Text_Area_1.setEditable(false);
                         if (e.getImg() != null) {
-                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 180), true);
+                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                             URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
                             imgg1.fetch();
                             ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -180,18 +184,21 @@ public class PlanFormBienEtre extends BaseForm {
                             public void actionPerformed(ActionEvent evt) {
                                 Form consulter = new Form("Details", BoxLayout.y());
                                 // consulter.getStyle().setBgColor(0x99CCCC);
-                                consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
+                                /*   consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
                                     PlanFormBienEtre pf = new PlanFormBienEtre();
                                     pf.show();
 
-                                });
+                                });*/
+
+                                Form last = Display.getInstance().getCurrent();
+                                consulter.getToolbar().setBackCommand("", e -> last.show());
                                 Container c = new Container(BoxLayout.y());
                                 Container C = new Container(new GridLayout(2, 1));
                                 consulter.add(c);
                                 consulter.add(C);
-                                
+
                                 Label sp = new Label();
-                                Label tit = new Label("  Libelle : " );
+                                Label tit = new Label("  Libelle : ");
                                 Label Mes = new Label("  Description :");
                                 Label vil = new Label("  Ville : ");
                                 Label ad = new Label("  Adresse : ");
@@ -201,7 +208,7 @@ public class PlanFormBienEtre extends BaseForm {
                                 Label ville = new Label();
                                 SpanLabel message = new SpanLabel();
 
-                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 150), true);
+                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                                 URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
                                 imgg1.fetch();
                                 ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -215,11 +222,11 @@ public class PlanFormBienEtre extends BaseForm {
                                 c.add(Mes);
                                 c.add(message);
                                 c.add(imgv1);
-                                
-                                Libelle.setText("  "+e.getLibelle());
-                                ville.setText("  "+e.getVille());
-                                Adresse.setText("  "+e.getAdresse());
-                                message.setText("  "+e.getDescription());
+
+                                Libelle.setText("  " + e.getLibelle());
+                                ville.setText("  " + e.getVille());
+                                Adresse.setText("  " + e.getAdresse());
+                                message.setText("  " + e.getDescription());
 
                                 consulter.show();
                                 tit.getStyle().setFgColor(0xFF3366);

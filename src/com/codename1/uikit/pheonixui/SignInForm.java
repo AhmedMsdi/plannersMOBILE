@@ -31,9 +31,11 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.util.StringUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * GUI builder created Form
@@ -45,7 +47,7 @@ public class SignInForm extends com.codename1.ui.Form {
     public SignInForm() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
-    public static int id;
+    public static int id_u;
 
     public SignInForm(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
@@ -149,16 +151,22 @@ public class SignInForm extends com.codename1.ui.Form {
                 if (!listuser.isEmpty()) {
                     for (User e : listuser) {
 
-                        id = e.getId_u();
-                      
+                        id_u = e.getId_u();
                         /*  Curentuser c =new Curentuser();
                     c.setCurrent(users.get("username").toString());
                     c.setCurrentId(Integer.parseInt(users.get("id").toString()));
                          */
+                String pwd = StringUtil.replaceAll(e.getPassword(), "$2y", "$2a"); 
+            
+                 if (BCrypt.checkpw(pswd, pwd) == true) {
                        /* AccueilForm AccueilF = new AccueilForm();
                         AccueilF.show();*/
-                        PubliciteForm AccueilF = new PubliciteForm();
+                       PubliciteForm AccueilF = new PubliciteForm();
                         AccueilF.show();
+                 }else {
+                    Dialog.show("Erreur d'authentification", "Verifier votre mot de passe!!", "OK", "Annuler");
+
+                }
                     }
                 } else {
                     Dialog.show("Erreur d'authentification", "Verifier votre Nom d'utilisateur ou mot de passe!!", "OK", "Annuler");
@@ -212,3 +220,4 @@ public class SignInForm extends com.codename1.ui.Form {
 
     }
 }
+

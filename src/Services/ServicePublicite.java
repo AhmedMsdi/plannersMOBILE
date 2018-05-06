@@ -46,7 +46,7 @@ public class ServicePublicite {
         ConnectionRequest con = new ConnectionRequest();
         String Url = "http://"+serverAhmed+"/planners/web/app_dev.php/pubjsonnew?text=" + ta.getTitre_pub()
                 + "&description=" + ta.getDesc_pub() +"&siteweb="+ta.getSite_pub()+"&tags="+ta.getTags()
-                +"&image="+ta.getImg_pub()+"&idUser="+SignInForm.id;
+                +"&image="+ta.getImg_pub()+"&idUser="+SignInForm.id_u;
         con.setUrl(Url);
 
         System.out.println("tt");

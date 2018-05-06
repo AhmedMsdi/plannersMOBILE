@@ -63,6 +63,9 @@ import com.codename1.ui.plaf.RoundBorder;
  */
 public class PlanFormProfil extends BaseForm {
 
+    FloatingActionButton modif, Supprimer;
+    //Button butModif ; 
+
     public PlanFormProfil() {
         this(com.codename1.ui.util.Resources.getGlobalResources());
     }
@@ -86,12 +89,12 @@ public class PlanFormProfil extends BaseForm {
             popup.setDialogUIID("Container");
             popup.setLayout(new LayeredLayout());
             ServicePlans ser = new ServicePlans();
-            Plan p = new Plan();
-
-          //  AjouterPlanForm a = new AjouterPlanForm();
-          //  a.getF().show();
+            AjouterPlanForm.plan = null;
+            AjouterPlanForm a = new AjouterPlanForm();
+            a.getF().show();
 
         });
+        //addComponent(fab);
     }
 
 //-- DON'T EDIT BELOW THIS LINE!!!
@@ -105,8 +108,9 @@ public class PlanFormProfil extends BaseForm {
     private com.codename1.ui.Label gui_separator1 = new com.codename1.ui.Label();
     private com.codename1.ui.Button gui_Button_3 = new com.codename1.ui.Button();
     private com.codename1.ui.Button gui_Button_4 = new com.codename1.ui.Button();
-
+    Button butModif = new Button();
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
         try {
 
@@ -114,7 +118,7 @@ public class PlanFormProfil extends BaseForm {
             setTitle("List Des Plans");
             setName("List Des Plans");
             ConnectionRequest con = new ConnectionRequest();
-            con.setUrl("http://127.0.0.1/planners/web/app_dev.php/tasks/all");
+            con.setUrl("http://127.0.0.1/planners/web/app_dev.php/getPlanUser/" + SignInForm.id_u);
             con.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
                 public void actionPerformed(NetworkEvent evt) {
@@ -122,9 +126,6 @@ public class PlanFormProfil extends BaseForm {
                     ArrayList<Plan> l = (ArrayList<Plan>) sc.getList(new String(con.getResponseData()));
 
                     for (Plan e : l) {
-                        if (e.getId_p() == 47) {
-                            String dd = "";
-                        }
 
                         gui_Container_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.BorderLayout());
                         gui_Multi_Button_1 = new com.codename1.components.MultiButton();
@@ -148,11 +149,16 @@ public class PlanFormProfil extends BaseForm {
                         gui_Text_Area_1.setGrowByContent(false);
                         gui_Text_Area_1.setEditable(false);
                         if (e.getImg() != null) {
-                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 180), true);
+                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                             URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
-                            imgg1.fetch();
-                            ImageViewer imgv1 = new ImageViewer(imgg1);
-                            gui_imageContainer1.add(BorderLayout.CENTER, imgv1);
+                            // imgg1.fetch();
+                            //   ImageViewer imgv1 = new ImageViewer(imgg1);
+
+                            ScaleImageLabel sl = new ScaleImageLabel(imgg1);
+                            sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+                            gui_imageContainer1.add(BorderLayout.CENTER, sl);
+
+                            // gui_imageContainer1.add(BorderLayout.CENTER, imgv1);
                         } else {
                             ScaleImageLabel sl = new ScaleImageLabel(resourceObjectInstance.getImage("skate-park.jpg"));
 
@@ -182,32 +188,66 @@ public class PlanFormProfil extends BaseForm {
                         gui_imageContainer1.addComponent(com.codename1.ui.layouts.BorderLayout.SOUTH, gui_Container_2);
                         gui_Container_2.setName("Container_2");
                         //gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Text_Area_1);
-                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.WEST, gui_Button_1);
-                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_3);
-                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_4);
-
+                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_1);
+                         gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.WEST, gui_Button_3);
+                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, gui_Button_4);
+ 
                         // gui_Text_Area_1.setText(e.getDescription());
                         // gui_Text_Area_1.setUIID("SlightlySmallerFontLabelLeft");
                         // gui_Text_Area_1.setName("Text_Area_1");
-                        gui_Button_1.setText("Modifier");
-                        gui_Button_1.setUIID("Label");
-                        gui_Button_1.setName("Modifier");
-                        gui_Button_1.getStyle().setFgColor(0x333399);
-
-                        gui_Button_1.addPointerPressedListener(new ActionListener() {
+                        /*  FloatingActionButton modif = FloatingActionButton.createFAB(FontImage.MATERIAL_EDIT);*/
+                      //  gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.WEST, modif);
+/*
+                        modif.addPointerPressedListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent evt) {
-                              
-                             //   ModifierPlan a = new ModifierPlan();
-                             //   a.getF().show();
+                                AjouterPlanForm.plan = e;
+                                AjouterPlanForm a = new AjouterPlanForm();
+                                //a.id_plan= e.getId_p(); 
+                                a.getF().show();
+
+                            }
+                        });*/
+
+
+ /*
+                        FloatingActionButton Supprimer = FloatingActionButton.createFAB(FontImage.MATERIAL_REMOVE);
+                        modif.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent evt) {
+                                ServicePlans ser = new ServicePlans();
+                                Plan p = new Plan();
+                                p.setId_p(e.getId_p());
+                                ser.Delete(p);
+                                PlanFormProfil a = new PlanFormProfil();
+                                a.show();
                             }
                         });
-                        gui_Button_3.setText("Supprimer");
-                        gui_Button_3.setUIID("Labe2");
-                        gui_Button_3.setName("Supprimer");
-                        gui_Button_3.getStyle().setFgColor(0x333399);
-
+                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.CENTER, Supprimer);
+                         */
+ 
+ 
+                        gui_Button_3.setText("Modifier");
+                        gui_Button_3.setUIID("Label");
+                        gui_Button_3.setName("Modifier");
+                        gui_Button_4.getStyle().setFgColor(0x333399);
+                        
                         gui_Button_3.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent evt) {
+                                AjouterPlanForm.plan = e;
+                                AjouterPlanForm a = new AjouterPlanForm();
+                                //a.id_plan= e.getId_p(); 
+                                a.getF().show();
+
+                            }
+                        });
+                        gui_Button_4.setText("Supprimer");
+                        gui_Button_4.setUIID("Labe2");
+                        gui_Button_4.setName("Supprimer");
+                        gui_Button_4.getStyle().setFgColor(0x333399);
+
+                        gui_Button_4.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent evt) {
                                 ServicePlans ser = new ServicePlans();
@@ -219,19 +259,36 @@ public class PlanFormProfil extends BaseForm {
                             }
                         });
 
-                        //    com.codename1.ui.FontImage.setMaterialIcon(gui_Button_1, "".charAt(0));
-                        gui_Container_2.setName("Container_2");
+                     /*   FloatingActionButton Suit = FloatingActionButton.createFAB(FontImage.MATERIAL_TRENDING_FLAT);
+                        gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, Suit);
+                       */
 
-                        gui_Button_4.addActionListener(new ActionListener() {
+                      //  gui_Container_2.addComponent(com.codename1.ui.layouts.BorderLayout.EAST, gui_Button_1);
+                
+                  
+                        gui_Button_1.setText("");
+                        gui_Button_1.setUIID("Label");
+                        gui_Button_1.setName("Button_1");
+
+                       com.codename1.ui.FontImage.setMaterialIcon(gui_Button_1, "".charAt(0));
+                        gui_Container_2.setName("Container_2");
+      gui_Button_1.setHeight(10);
+
+
+                        gui_Button_1.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent evt) {
                                 Form consulter = new Form("BON & PLANS", BoxLayout.y());
                                 // consulter.getStyle().setBgColor(0x99CCCC);
-                                consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
+                               /* consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
                                     PlanFormProfil pf = new PlanFormProfil();
                                     pf.show();
 
-                                });
+                                });*/
+                               
+                                       Form last = Display.getInstance().getCurrent();
+        consulter.getToolbar().setBackCommand("", e -> last.show());
+                               
                                 Container c = new Container(BoxLayout.y());
                                 Container C = new Container(new GridLayout(2, 1));
                                 consulter.add(c);
@@ -248,7 +305,7 @@ public class PlanFormProfil extends BaseForm {
                                 Label ville = new Label();
                                 SpanLabel message = new SpanLabel();
 
-                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 150), true);
+                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                                 URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
                                 imgg1.fetch();
                                 ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -275,12 +332,12 @@ public class PlanFormProfil extends BaseForm {
                                 ad.getStyle().setFgColor(0xFF3366);
                             }
                         });
-                        addComponent(gui_separator1);
-                    }
-                }
+                    }                  addComponent(gui_separator1);
 
+                }
             });
             NetworkManager.getInstance().addToQueueAndWait(con);
+
         } catch (Exception e) {
             ToastBar.showMessage(e.getMessage(), FontImage.MATERIAL_PLACE);
         }

@@ -67,28 +67,9 @@ public class Plan {
     public void setEtatnotif(int etatnotif) {
         this.etatnotif = etatnotif;
     }
-
-    public Plan(String libelle, String adresse, String description, String ville, String prix, int id_sc, double longitude, double latitude, String img) {
-        this.libelle = libelle;
-        this.adresse = adresse;
-        this.description = description;
-        this.ville = ville;
-        this.prix = prix;
-        this.id_sc = id_sc;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.img = img;
-    }
-
+ 
     private int etatnotif;
-
-    public Plan(int id_p, String libelle, String prix, String img) {
-        this.id_p = id_p;
-        this.libelle = libelle;
-        this.prix = prix;
-        this.img = img;
-    }
-
+ 
     public String getImg() {
         return img;
     }
@@ -99,51 +80,7 @@ public class Plan {
     private String LibCat;
     private String LibSousCat;
 
-    public Plan(int id_p, String libelle, String adresse, String description,
-            String ville, String image, String avis, String email, String prix, double longitude, double latitude,
-             int id_u, int id_sc) {
-        this.id_p = id_p;
-        this.libelle = libelle;
-        this.adresse = adresse;
-        this.description = description;
-
-        this.ville = ville;
-        this.img = image;
-        this.avis = avis;
-
-        this.email = email;
-
-        this.prix = prix;
-        this.longitude = longitude;
-        this.latitude = latitude;
-
-        this.id_u = id_u;
-        this.id_sc = id_sc;
-    }
-
-    public Plan(int id_p, int note, String libelle, String adresse, String description,
-            String ville, String image, String avis, String email, String prix, double longitude, double latitude,
-             int id_u, int id_sc) {
-        this.id_p = id_p;
-        this.note = note;
-        this.libelle = libelle;
-        this.adresse = adresse;
-        this.description = description;
-
-        this.ville = ville;
-        this.img = image;
-        this.avis = avis;
-
-        this.email = email;
-
-        this.prix = prix;
-        this.longitude = longitude;
-        this.latitude = latitude;
-
-        this.id_u = id_u;
-        this.id_sc = id_sc;
-    }
-
+    
     public double getLongitude() {
         return longitude;
     }
@@ -159,26 +96,7 @@ public class Plan {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-
-    public Plan() {
-        //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Plan(int id_p,
-             String libelle, String adresse, String description, String ville, String prix, int id_sc, double longitude, double latitude, String img) {
-        this.id_p = id_p;
-
-        this.libelle = libelle;
-        this.adresse = adresse;
-        this.description = description;
-        this.ville = ville;
-        this.prix = prix;
-        this.id_sc = id_sc;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.img = img;
-    }
-
+ 
     public int getId_p() {
         return id_p;
     }
@@ -281,6 +199,24 @@ public class Plan {
 
     public void setLibSousCat(String LibSousCat) {
         this.LibSousCat = LibSousCat;
+    }
+
+    public Plan() {
+    }
+
+    public Plan(int id_p, int note, String libelle, String adresse, String description, String ville  , String prix, int id_u,  int id_sc, double longitude, double latitude, String img ) {
+        this.id_p = id_p;
+        this.note = note;
+        this.libelle = libelle;
+        this.adresse = adresse;
+        this.description = description;
+        this.ville = ville; 
+        this.prix = prix;
+        this.id_u = id_u; 
+        this.id_sc = id_sc;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.img = img; 
     }
 
     @Override

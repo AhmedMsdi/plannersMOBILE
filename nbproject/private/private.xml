@@ -11,9 +11,13 @@
             <file>file:/C:/wamp64/www/BonPlanMobile/src/Services/ServiceMessagerie.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/Services/ServicePublicite.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/com/mycompany/myapp/MyApplication.java</file>
+            <file>file:/C:/wamp64/www/BonPlanMobile/src/Services/ServiceEvent.java</file>
+            <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Plan/MapsForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/Services/ServiceHebergement.java</file>
+            <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Event/DetailEventForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Article/AddPubForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/com/codename1/uikit/pheonixui/WalkthruForm.java</file>
+            <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Plan/AjouterPlanForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Hebergement/MessagerieForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/Entity/User.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/com/codename1/uikit/pheonixui/BaseForm.java</file>
@@ -21,6 +25,7 @@
             <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Article/ArticleForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/Entity/Article.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Article/AddArticleForm.java</file>
+            <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Event/MapEventForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/com/codename1/uikit/pheonixui/SignInForm.java</file>
             <file>file:/C:/wamp64/www/BonPlanMobile/src/GUI/Hebergement/HebergementForm.java</file>
         </group>

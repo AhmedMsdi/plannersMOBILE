@@ -316,7 +316,7 @@ public class ArticleForm extends BaseForm {
                             a.add(gui_imageContainer1);
                                            Button b = new Button("Supprimer");
                                          
-                                           if ( (int)Float.parseFloat(pub.getId_u())==SignInForm.id){
+                                           if ( (int)Float.parseFloat(pub.getId_u())==SignInForm.id_u){
                          a.add(b);
                                            }
                      b.addActionListener(new ActionListener() {

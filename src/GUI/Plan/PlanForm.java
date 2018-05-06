@@ -76,10 +76,12 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
     public PlanForm(com.codename1.ui.util.Resources resourceObjectInstance) {
          
         initGuiBuilderComponents(resourceObjectInstance);
-      
+
         getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_PUBLIC, e -> {
             
-             
+             motrech=zoneRecherche.getText();
+            PlanForm pf = new PlanForm(); 
+             pf.show();
             
         });
           boutonRecherche.addActionListener((new ActionListener() {
@@ -111,9 +113,9 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
                 sourceComponent = sourceComponent.getParent().getLeadParent();
             }
 
-          /*  if (sourceComponent == boutonRecherche) {
+            if (sourceComponent == boutonRecherche) {
                 onButton_2ActionEvent(ev);
-            }*/
+            }
         }
 
         public void dataChanged(int type, int index) {
@@ -121,7 +123,9 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
     }
  
     public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
-           
+           PlanForm pf = new PlanForm();
+           pf.motrech=zoneRecherche.getText();
+                                    pf.show();
  
           
 
@@ -131,17 +135,26 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
    
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
-        try {  
-            setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
+        try {   setLayout(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
             setTitle("Divertissement");
             setName("Divertissement");
            // boutonRecherche.setText("Find");
            // boutonRecherche.setName("Button_2");
-           
+            zoneRecherche = new TextField();
+            zoneRecherche.setHint("Rechercher"); 
+              zoneRecherche.setText(motrech);
+                  //    getToolbar().addComponent(BorderLayout.CENTER_BEHAVIOR_CENTER_ABSOLUTE,zoneRecherche);
+
+        getToolbar().addComponent(BorderLayout.CENTER, zoneRecherche);
+        //getToolbar().addComponent(BorderLayout.EAST, boutonRecherche);
       
          
             ConnectionRequest con = new ConnectionRequest();
-       con.setUrl("http://127.0.0.1/planners/web/app_dev.php/tasks/allDiv");
+               String rech = motrech ;
+        if (!"".equals(rech.trim())) { 
+                con.setUrl("http://localhost/planners/web/app_dev.php/Recherch/" + rech.trim()  );}
+        else
+        { con.setUrl("http://127.0.0.1/planners/web/app_dev.php/tasks/allDiv");}
 
             con.addResponseListener(new ActionListener<NetworkEvent>() {
                 @Override
@@ -165,22 +178,47 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
 
                         FontImage.setMaterialIcon(gui_LA, FontImage.MATERIAL_LOCATION_ON);
                         gui_LA.setIconPosition(BorderLayout.EAST);
+                          gui_LA.addActionListener(new ActionListener() {
+                            @Override
+                          public void actionPerformed(ActionEvent evt) {
+                                try {
+                                    MapsForm.idplan = e.getId_p();
+                                MapsForm.longitude = e.getLongitude();
+                                MapsForm.latitude = e.getLatitude();  
+                                MapsForm.libmarker=e.getLibelle() ;
+                                 MapsForm pf = new MapsForm();
+                                 
+                                    pf.getF().show();
+                                
+                                } catch (Exception e) {
+                                      ToastBar.showMessage(e.getMessage(), FontImage.MATERIAL_PLACE);
+                                }
+                                
+                            }
                         
+                        
+                        }); 
 
                         gui_Text_Area_1.setRows(2);
                         gui_Text_Area_1.setColumns(100);
                         gui_Text_Area_1.setGrowByContent(false);
                         gui_Text_Area_1.setEditable(false);
                         if (e.getImg() != null) {
-                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 180), true);
+                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                             URLImage.ImageAdapter adapter = null;
                              URLImage iqsmgg1= URLImage.createToFileSystem(img1,  "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg(),  "http://localhost/planners/web/uploads/ImagesPlans/chz/" + e.getImg(), adapter);
                            // URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg()); 
                   URLImage imgg1= URLImage.createToStorage(img1, "http://localhost/planners/web/uploads/ImagesPlans/chz/" + e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
                
                             imgg1.fetch();
+                            /*
                             ImageViewer imgv1 = new ImageViewer(imgg1);
                             gui_imageContainer1.add(BorderLayout.CENTER, imgv1);
+                            */
+                                 ScaleImageLabel sl = new ScaleImageLabel(imgg1);
+                            sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+                            gui_imageContainer1.add(BorderLayout.CENTER, sl);
+                            
                         } else {
                             ScaleImageLabel sl = new ScaleImageLabel(resourceObjectInstance.getImage("skate-park.jpg"));
 
@@ -217,19 +255,23 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
                         gui_Button_1.setText("");
                         gui_Button_1.setUIID("Label");
                         gui_Button_1.setName("Button_1");
+
                         com.codename1.ui.FontImage.setMaterialIcon(gui_Button_1, "".charAt(0));
                         gui_Container_2.setName("Container_2");
-
                         gui_Button_1.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent evt) {
                                 Form consulter = new Form("Details", BoxLayout.y());
                                 // consulter.getStyle().setBgColor(0x99CCCC);
-                                consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
+                              
+                                       Form last = Display.getInstance().getCurrent();
+        consulter.getToolbar().setBackCommand("", e -> last.show());
+                                
+                                /*consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
                                     PlanForm pf = new PlanForm();
                                     pf.show();
 
-                                });
+                                });*/
                                 Container c = new Container(BoxLayout.y());
                                 Container C = new Container(new GridLayout(2, 1));
                                 consulter.add(c);
@@ -246,7 +288,7 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
                                 Label ville = new Label();
                                 SpanLabel message = new SpanLabel();
 
-                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 150), true);
+                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                                 URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
                                 imgg1.fetch();
                                 ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -273,12 +315,11 @@ private com.codename1.ui.Button boutonRecherche = new com.codename1.ui.Button();
                                 ad.getStyle().setFgColor(0xFF3366);
                             }
                         });
-                        addComponent(gui_separator1);
                     }
                 }
 
             });
-      
+            motrech="";
             NetworkManager.getInstance().addToQueueAndWait(con);
         } catch (Exception e) {
             ToastBar.showMessage(e.getMessage(), FontImage.MATERIAL_PLACE);

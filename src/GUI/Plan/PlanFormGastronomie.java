@@ -109,34 +109,39 @@ public class PlanFormGastronomie extends BaseForm {
 
                         FontImage.setMaterialIcon(gui_LA, FontImage.MATERIAL_LOCATION_ON);
                         gui_LA.setIconPosition(BorderLayout.EAST);
-   /*gui_LA.addActionListener(new ActionListener() {
+                        gui_LA.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent evt) {
-                                 MapsForm pf = new MapsForm();
-                                 pf.idplan=e.getId_p();
-                                 pf.longitude=e.getLongitude();
-                                     pf.latitude=e.getLatitude();
+                                try {
+                                    MapsForm.idplan = e.getId_p();
+                                    MapsForm.longitude = e.getLongitude();
+                                    MapsForm.latitude = e.getLatitude();
+                                    MapsForm.libmarker = e.getLibelle();
+                                    MapsForm pf = new MapsForm();
                                     pf.getF().show();
-                                
+
+                                } catch (Exception e) {
+                                    ToastBar.showMessage(e.getMessage(), FontImage.MATERIAL_PLACE);
+                                }
                             }
-                        
-                        
-                        });*/
-                        
-                        
-                        
+
+                        });
+
                         gui_Text_Area_1.setRows(2);
                         gui_Text_Area_1.setColumns(100);
                         gui_Text_Area_1.setGrowByContent(false);
                         gui_Text_Area_1.setEditable(false);
                         if (e.getImg() != null) {
-                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 180), true);
+                            EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                             Image imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
-                            imgg1.fill(100, 100);
-                            ImageViewer imgv1 = new ImageViewer(imgg1);
-                           // imgg1.fill(200, 200);
-                           
-                            gui_imageContainer1.add(BorderLayout.CENTER, imgg1);
+                            //   imgg1.fill(300, 200);
+                            // ImageViewer imgv1 = new ImageViewer(imgg1);
+
+                            //gui_imageContainer1.add(BorderLayout.CENTER, imgg1);
+                            ScaleImageLabel sl = new ScaleImageLabel(imgg1);
+                            sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+                            gui_imageContainer1.add(BorderLayout.CENTER, sl);
+
                         } else {
                             ScaleImageLabel sl = new ScaleImageLabel(resourceObjectInstance.getImage("skate-park.jpg"));
 
@@ -181,18 +186,22 @@ public class PlanFormGastronomie extends BaseForm {
                             public void actionPerformed(ActionEvent evt) {
                                 Form consulter = new Form("Details", BoxLayout.y());
                                 // consulter.getStyle().setBgColor(0x99CCCC);
-                                consulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
+                                /*onsulter.getToolbar().addCommandToRightBar("back", null, (ev) -> {
                                     PlanFormGastronomie pf = new PlanFormGastronomie();
                                     pf.show();
 
-                                });
+                                });*/
+
+                                Form last = Display.getInstance().getCurrent();
+                                consulter.getToolbar().setBackCommand("", e -> last.show());
+
                                 Container c = new Container(BoxLayout.y());
                                 Container C = new Container(new GridLayout(2, 1));
                                 consulter.add(c);
                                 consulter.add(C);
-                                
+
                                 Label sp = new Label();
-                                Label tit = new Label("  Libelle : " );
+                                Label tit = new Label("  Libelle : ");
                                 Label Mes = new Label("  Description :");
                                 Label vil = new Label("  Ville : ");
                                 Label ad = new Label("  Adresse : ");
@@ -202,7 +211,7 @@ public class PlanFormGastronomie extends BaseForm {
                                 Label ville = new Label();
                                 SpanLabel message = new SpanLabel();
 
-                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 150), true);
+                                EncodedImage img1 = EncodedImage.createFromImage(Image.createImage(Display.getInstance().getDisplayWidth(), 300), true);
                                 URLImage imgg1 = URLImage.createToStorage(img1, e.getImg(), "http://localhost/planners/web/uploads/ImagesPlans/" + e.getImg());
                                 imgg1.fetch();
                                 ImageViewer imgv1 = new ImageViewer(imgg1);
@@ -216,11 +225,11 @@ public class PlanFormGastronomie extends BaseForm {
                                 c.add(Mes);
                                 c.add(message);
                                 c.add(imgv1);
-                                
-                                Libelle.setText("  "+e.getLibelle());
-                                ville.setText("  "+e.getVille());
-                                Adresse.setText("  "+e.getAdresse());
-                                message.setText("  "+e.getDescription());
+
+                                Libelle.setText("  " + e.getLibelle());
+                                ville.setText("  " + e.getVille());
+                                Adresse.setText("  " + e.getAdresse());
+                                message.setText("  " + e.getDescription());
 
                                 consulter.show();
                                 tit.getStyle().setFgColor(0xFF3366);
