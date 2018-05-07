@@ -58,6 +58,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class NewEventForm extends BaseForm implements Animation, StyleListener, Iterable<Component>{
     
     CategorieEvent categorie1;
@@ -191,6 +193,11 @@ public class NewEventForm extends BaseForm implements Animation, StyleListener, 
                     ,prix,gui_Text_desc.getText(),tel,img,dd,time,id_cat,EventForm.id_user);
             System.out.println("ajout "+t);
             ser.ajouterEvent(t);
+            
+            try {
+                new EventForm().show();
+            } catch (IOException ex) {
+            }
 
         });
         takepicture.setText("camera");
@@ -423,6 +430,10 @@ public class NewEventForm extends BaseForm implements Animation, StyleListener, 
             System.out.println("Modif "+t);
             ser.ModifEvent(t);
 
+                try {
+                    new EventForm().show();
+                } catch (IOException ex) {
+                }
         });
         }
     }
